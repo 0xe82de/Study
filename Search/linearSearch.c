@@ -13,7 +13,7 @@ int LinearSearch(int array[], int len, int target) {
 
 	for (index = 0; index < len; index++) {
 		printf("#");
-		if (array[index] == target) {
+		if (target == array[index]) {
 			return index;
 		}
 	}
