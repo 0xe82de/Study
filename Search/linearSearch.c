@@ -11,10 +11,9 @@ float GetTime(clock_t start, clock_t finish) {
 }
 
 int LinearSearch(int array[], int len, int target) {
-	int index;
 	opCount = 0;
 
-	for (index = 0; index < len; index++) {
+	for (int index = 0; index < len; index++) {
 		opCount += 1;
 
 		if (target == array[index]) {
