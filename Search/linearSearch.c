@@ -4,15 +4,19 @@
 
 #define FALSE -1
 
+int opCount;
+
 float GetTime(clock_t start, clock_t finish) {
 	return (float)(finish - start) / CLOCKS_PER_SEC;
 }
 
 int LinearSearch(int array[], int len, int target) {
 	int index;
+	opCount = 0;
 
 	for (index = 0; index < len; index++) {
-		printf("#");
+		opCount += 1;
+
 		if (target == array[index]) {
 			return index;
 		}
@@ -34,13 +38,14 @@ int main(void) {
 		finish = clock();
 		time = GetTime(start, finish);
 	
-		printf("\n< Result of target %d >\n", target[i]);
+		printf("## Result of target %d ##\n", target[i]);
 		if (idx == FALSE) {
-			printf("There are no target %d in the array.\n", target[i]);
+			printf("FAIL! There are no target %d in the array.\n", target[i]);
 		}
 		else {
-			printf("Index of target %d is %d.\n", target[i], idx);
+			printf("SUCCESS! Index of target %d is %d.\n", target[i], idx);
 		}
+		printf("Number of Operations: %d\n", opCount);
 		printf("Run Time: %.5lf\n\n", time);
 	}
 
