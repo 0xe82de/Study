@@ -17,21 +17,19 @@ int GetCenter(int first, int last) {
 int BinarySearch(int array[], int len, int target) {
 	int first = 0;
 	int last = len - 1;
-	int center;
 	opCount = 0;
 	
 	while (first <= last) {
 		opCount += 1;
-		center = GetCenter(first, last);
 
-		if (target == array[center]) {
-			return center;
+		if (target == array[GetCenter(first, last)]) {
+			return GetCenter(first, last);
 		}
-		else if (target > array[center]) {
-			first = center + 1;
+		else if (target > array[GetCenter(first, last)]) {
+			first = GetCenter(first, last) + 1;
 		}
-		else if (target < array[center]) {
-			last = center - 1;
+		else if (target < array[GetCenter(first, last)]) {
+			last = GetCenter(first, last) - 1;
 		}
 	}
 
