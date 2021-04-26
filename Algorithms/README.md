@@ -1,2 +1,2 @@
-# Algorithms-in-C
+# Algorithms
 Algorithm Implementation
