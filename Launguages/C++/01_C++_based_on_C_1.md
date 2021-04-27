@@ -202,7 +202,7 @@ int main(void) {
 }
 ```
 
-## 01-2 함수 오버로딩 (Function Overloading)
+## 01-2 함수 오버로딩
 
 ### 함수 오버로딩의 이해
 
@@ -289,7 +289,7 @@ void swap(double* d1, double* d2) {
 }
 ```
 
-## 01-3 매개변수의 디폴트 값 (Default Value)
+## 01-3 매개변수의 디폴트 값
 
 ### 디폴트 값의 의미
 
@@ -454,6 +454,359 @@ int SimpleFunc(void) {
 4. (추가) 함수 오버로딩의 조건을 만족(함수의 이름, 매개변수의 자료형과 개수가 달라야 한다.)하므로 인자를 전달하면 컴파일이 된다.
 5. (추가) 인자를 전달하지 않으면 컴파일 에러가 발생한다.
 
-## 01-4 인라인(inline) 함수
+## 01-4 인라인 함수
 
 ### 매크로 함수의 장점
+
+- 장점: 일반적인 함수에 비해서 실행속도의 이점이 있다.
+- 단점: 복잡한 함수를 매크로의 형태로 정의하기 어렵다.
+- 매크로(#define)를 이용한 함수의 인라인화는 전처리기에 의해 처리되지만, 키워드 "inline"을 이용한 함수의 인라인화는 컴파일러에 의해서 처리가 된다.
+- 따라서 컴파일러는 함수의 인라인화가 성능에 해가 된다고 판단하면 "inline" 키워드를 무시하기도 한다. 또한, 컴파일러는 일부 함수를 임의로 인라인화 하기도 한다.
+
+```c++
+#include <iostream>
+
+inline int SQUARE(int x) {
+	return x * x;
+}
+
+
+int main(void) {
+	std::cout << SQUARE(1) << std::endl;
+	std::cout << SQUARE(9) << std::endl;
+	std::cout << SQUARE(9.1) << std::endl; // 81 출력.. 자료형에 의존..
+
+	return 0;
+}
+```
+
+- 위와 같이 "inline" 키워드로 정의된 인라인 함수는 매개변수로 전달되는 인자의 자료형에 의존하게 된다.
+- 아래와 같이 템플릿을 이용하면 자료형에 의존하지 않고 인라인 함수를 사용할 수 있다.
+
+```c++
+#include <iostream>
+
+template <typename A>
+inline A SQUARE(A x) {
+	return x * x;
+}
+
+int main(void) {
+	std::cout << SQUARE(5.5) << std::endl;
+	std::cout << SQUARE(12) << std::endl;
+
+	return 0;
+}
+```
+
+## 01-5 이름 공간(namespace)
+
+### 원리
+
+```c++
+#include <iostream>
+
+namespace BestComImpl {
+	void SimpleFunc(void) {
+		std::cout << "BestCom이 정의한 함수" << std::endl;
+	}
+}
+
+namespace ProgComImpl {
+	void SimpleFunc(void) {
+		std::cout << "ProgCom이 정의한 함수" << std::endl;
+	}
+}
+
+int main(void) {
+	BestComImpl::SimpleFunc();
+	ProgComImpl::SimpleFunc();
+
+	return 0;
+}
+```
+
+- 연산자 "::": 범위지정 연산자(scope resolution operator)라고 하며, 이름 공간을 지정할 때 사용하는 연산이다.
+
+### 이름공간 기반의 함수 선언과 정의
+
+```c++
+#include <iostream>
+
+namespace BestComImpl {
+	void SimpleFunc(void);
+	void PrettyFunc(void);
+}
+
+namespace ProgComImpl {
+	void SimpleFunc(void);
+}
+
+int main(void) {
+	BestComImpl::SimpleFunc();
+
+	return 0;
+}
+
+void BestComImpl::SimpleFunc(void) {
+	std::cout << "BestCom이 정의한 함수" << std::endl;
+	PrettyFunc(); // BestComImpl 이름 공간
+	ProgComImpl::SimpleFunc(); // ProgComImpl 이름 공간
+}
+
+void BestComImpl::PrettyFunc(void) {
+	std::cout << "Pretty" << std::endl;
+}
+
+void ProgComImpl::SimpleFunc(void) {
+	std::cout << "ProgCom이 정의한 함수" << std::endl;
+}
+```
+
+### 이름 공간의 중첩
+
+```c++
+#include <iostream>
+
+namespace P {
+	int num = 1;
+
+	namespace C1 {
+		int num = 2;
+	}
+
+	namespace C2 {
+		int num = 3;
+	}
+}
+
+int main(void) {
+	std::cout << P::num << std::endl;
+	std::cout << P::C1::num << std::endl;
+	std::cout << P::C2::num << std::endl;
+
+	return 0;
+}
+```
+
+### 문제 01-4
+
+- 아래의 소스코드를 헤더파일 1개와 소스파일 2개로 분할하기.
+- 헤더파일: main 함수를 제외한 두 함수를 선언한다.
+- 소스파일1: main 함수를 삽입한다.
+- 소스파일2: main 함수를 제외한 두 함수 정의한다.
+
+```c++
+#include <iostream>
+
+namespace BestComImpl {
+	void SimpleFunc(void);
+	void PrettyFunc(void);
+}
+
+namespace ProgComImpl {
+	void SimpleFunc(void);
+}
+
+int main(void) {
+	BestComImpl::SimpleFunc();
+
+	return 0;
+}
+
+void BestComImpl::SimpleFunc(void) {
+	std::cout << "BestCom이 정의한 함수" << std::endl;
+	PrettyFunc(); // BestComImpl 이름 공간
+	ProgComImpl::SimpleFunc(); // ProgComImpl 이름 공간
+}
+
+void BestComImpl::PrettyFunc(void) {
+	std::cout << "Pretty" << std::endl;
+}
+
+void ProgComImpl::SimpleFunc(void) {
+	std::cout << "ProgCom이 정의한 함수" << std::endl;
+}
+```
+
+<vr>
+
+- solve
+
+```c++
+// header.h
+
+#ifndef NAMESPACE
+#define NAMEPACE
+
+namespace BestComImpl {
+	void SimpleFunc(void);
+	void PrettyFunc(void);
+}
+
+namespace ProgComImpl {
+	void SimpleFunc(void);
+}
+
+#endif
+```
+
+```c++
+// main.cpp
+
+#include "header.h"
+
+int main(void) {
+	BestComImpl::SimpleFunc();
+
+	return 0;
+}
+```
+
+```c++
+// function.cpp
+
+#include <iostream>
+#include "header.h"
+
+void BestComImpl::SimpleFunc(void) {
+	std::cout << "BestCom이 정의한 함수" << std::endl;
+	PrettyFunc(); // BestComImpl 이름 공간
+	ProgComImpl::SimpleFunc(); // ProgComImpl 이름 공간
+}
+
+void BestComImpl::PrettyFunc(void) {
+	std::cout << "Pretty" << std::endl;
+}
+
+void ProgComImpl::SimpleFunc(void) {
+	std::cout << "ProgCom이 정의한 함수" << std::endl;
+}
+```
+
+### using을 이용한 이름 공간의 명시
+
+```c++
+#include <iostream>
+
+namespace Hybrid {
+	void HybFunc(void) {
+		std::cout << "So simple function!" << std::endl;
+		std::cout << "In namespace Hybrid!" << std::endl;
+	}
+}
+
+int main(void) {
+	using Hybrid::HybFunc;
+
+	HybFunc();
+
+	return 0;
+}
+```
+
+```c++
+#include <iostream>
+
+using std::cin;
+using std::cout;
+using std::endl;
+
+int main(void) {
+	int num = 20;
+
+	cout << "Hello World!" << endl;
+	cout << "Hello " << "World!" << endl;
+	cout << num << ' ' << 'A';
+	cout << ' ' << 3.14 << endl;
+
+	return 0;
+}
+```
+
+```c++
+#include <iostream>
+
+// 아래처럼 사용 시 충돌이 발생할 수 있다.
+using namespace std;
+
+int main(void) {
+	int num = 20;
+
+	cout << "Hello World!" << endl;
+	cout << "Hello " << "World!" << endl;
+	cout << num << ' ' << 'A';
+	cout << ' ' << 3.14 << endl;
+
+	return 0;
+}
+```
+
+### 이름 공간의 별칭 지정
+
+```c++
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
+namespace AAA {
+	namespace BBB {
+		namespace CCC {
+			int num1, num2;
+		}
+	}
+}
+
+int main(void) {
+	namespace ABC = AAA::BBB::CCC;
+
+	ABC::num1 = 20;
+	ABC::num2 = 30;
+
+	cout << ABC::num1 << endl;
+	cout << ABC::num2 << endl;
+
+	return 0;
+}
+```
+
+### 범위지정 연산자(Scope Resolution Operator)의 추가 기능
+
+```c++
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
+int val = 200;
+
+int main(void) {
+	int val = 100;
+
+	val++;
+	::val++;
+
+	cout << val << endl;
+	cout << ::val << endl;
+
+	return 0;
+}
+```
+
+## 01-6 OOP 단계별 프로젝트 01단계
+
+### 프로그램 설명
+
+- 프로젝트 01단계에서는 C 스타일로 구현한다.
+- 기능
+  - 기능 1: 계좌개설
+  - 기능 2: 입금
+  - 기능 3: 출금
+  - 기능 4: 전체고객 잔액조회
+- 임의의 가정
+  - 통장의 계좌번호는 중복되지 않는다(중복검사를 하지 않겠다는 의미이다.).
+  - 입금 및 출금액은 무조건 0보다 크다(입금 및 출금액의 오류검사를 하지 않겠다는 의미이다.).
+  - 고객의 계좌정보는 계좌번호, 고객이름, 고객의 잔액, 세가지만 저장하고 관리한다.
+  - 둘 이상의 고객 정보 저장을 위해 배열을 사용한다.
+  - 계좌번호는 정수의 형태이다.
