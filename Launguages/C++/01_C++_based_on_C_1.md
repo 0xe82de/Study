@@ -810,3 +810,231 @@ int main(void) {
   - 고객의 계좌정보는 계좌번호, 고객이름, 고객의 잔액, 세가지만 저장하고 관리한다.
   - 둘 이상의 고객 정보 저장을 위해 배열을 사용한다.
   - 계좌번호는 정수의 형태이다.
+
+<br>
+
+- solve
+
+```c++
+#include <iostream>
+
+enum {OPEN_ACCOUNT=1, DEPOSIT, WITHDRAW, SHOW_ALL_ACCOUNT, EXIT};
+
+using std::cout;
+using std::cin;
+using std::endl;
+
+const int NAME_LEN = 20;
+const int ACCOUNT_MAX = 3;
+const int EMPTY = 0;
+
+typedef struct _account
+{
+	int accountId = EMPTY;
+	char name[NAME_LEN];
+	int balance = EMPTY;
+} Account;
+
+Account accountArr[ACCOUNT_MAX];
+int numberOfAccounts = 0;
+
+void ShowMenu(void);		// 메뉴 출력
+void OpenAccount(void);		// 계좌 개설
+void Deposit(void);			// 입금
+void WithDraw(void);		// 출금
+void ShowAllAccount(void);	// 모든 계좌 출력
+
+int main(void)
+{
+	int menu;
+
+	while (1)
+	{
+		ShowMenu();
+		cout << "선택: ";
+		cin >> menu;
+		cout << endl;
+
+		switch (menu)
+		{
+			case OPEN_ACCOUNT:
+				OpenAccount();
+
+				break;
+			case DEPOSIT:
+				Deposit();
+
+				break;
+			case WITHDRAW:
+				WithDraw();
+
+				break;
+			case SHOW_ALL_ACCOUNT:
+				ShowAllAccount();
+
+				break;
+			case EXIT:
+				cout << "프로그램이 종료됩니다." << endl;
+
+				return 0;
+			default:
+				cout << "잘못 입력하셨습니다." << endl;
+
+				break;
+		}
+
+		cout << endl;
+	}
+
+	return 0;
+}
+
+void ShowMenu(void)
+{
+	cout << "-----Menu-----" << endl;
+	cout << "1. 계좌개설" << endl;
+	cout << "2. 입금" << endl;
+	cout << "3. 출금" << endl;
+	cout << "4. 계좌정보 전체 출력" << endl;
+	cout << "5. 프로그램 종료" << endl;
+
+	return;
+}
+
+void OpenAccount(void)
+{
+	if (numberOfAccounts == ACCOUNT_MAX)
+	{
+		cout << "계좌 개설 공간이 부족합니다." << endl;
+		return;
+	}
+
+	int index;
+
+	// 빈 계좌가 있으면 해당 계좌의 index를 저장한다.
+	for (int i = 0; i < ACCOUNT_MAX; i++)
+	{
+		if (accountArr[i].accountId == EMPTY)
+		{
+			index = i;
+			break;
+		}
+	}
+
+	cout << "[계좌 개설]" << endl;
+
+	cout << "계좌ID: ";
+	cin >> accountArr[index].accountId;
+
+	cout << "이름: ";
+	cin >> accountArr[index].name;
+
+	cout << "입금액: ";
+	cin >> accountArr[index].balance;
+
+	numberOfAccounts++;
+
+	return;
+}
+
+void Deposit(void)
+{
+	int inputId;
+	int inputMoney;
+
+	while (1)
+	{
+		cout << "[입금]" << endl;
+
+		cout << "계좌ID: ";
+		cin >> inputId;
+
+		cout << "입금액: ";
+		cin >> inputMoney;
+
+		for (int i = 0; i < ACCOUNT_MAX; i++)
+		{
+			if (inputId == accountArr[i].accountId)
+			{
+				accountArr[i].balance += inputMoney;
+
+				cout << "입금완료" << endl;
+
+				return;
+			}
+		}
+
+		cout << "계좌가 존재하지 않습니다." << endl;
+	}
+
+	return;
+}
+
+void WithDraw(void)
+{
+	int inputId;
+	int outputMoney;
+	int balanceFlag;
+
+	while (1)
+	{
+		cout << "[출금]" << endl;
+
+		cout << "계좌ID: ";
+		cin >> inputId;
+
+		cout << "출금액: ";
+		cin >> outputMoney;
+
+		balanceFlag = 1;
+
+		for (int i = 0; i < ACCOUNT_MAX; i++)
+		{
+			if (inputId == accountArr[i].accountId)
+			{
+				if (accountArr[i].balance < outputMoney)
+				{
+					cout << "잔액이 부족합니다.";
+
+					balanceFlag = 0;
+
+					break;
+				}
+
+				accountArr[i].balance -= outputMoney;
+
+				cout << "출금완료" << endl;
+
+				return;
+			}
+		}
+
+		cout << endl;
+		if (balanceFlag == 1)
+		{
+
+			cout << "계좌가 존재하지 않습니다." << endl;
+		}
+		cout << endl;
+
+	}
+
+	return;
+}
+
+void ShowAllAccount(void)
+{
+	for (int i = 0; i < ACCOUNT_MAX; i++)
+	{
+		if (accountArr[i].accountId != EMPTY)
+		{
+			cout << "계좌ID: " << accountArr[i].accountId << endl;
+			cout << "이름: " << accountArr[i].name << endl;
+			cout << "잔액: " << accountArr[i].balance << endl;
+			cout << endl;
+		}
+	}
+
+	return;
+}
+```
