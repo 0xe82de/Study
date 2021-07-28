@@ -1,6 +1,6 @@
-# TIl / Development-Common-Sense
+# TIL / Development-Common-Sense
 
-📝 Today I Learned Development-Common-Sense.
+📝 Today I Learned Development Common Sense.
 
 ## Contents
 
