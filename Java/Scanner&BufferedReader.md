@@ -160,6 +160,7 @@ private static void scannerTest() {
 			System.out.print("\"" + stringArr2[i] + "\"" + " ");
 		}
 }
+
 /* 입출력
 
 정수 1개 입력 (구분자 -> 없음) | ex) 1 : 1
@@ -363,7 +364,9 @@ private static void bufferedReaderTest() throws IOException {
 
 		bw.close();
 }
+
 /* 입출력
+
 정수 1개 입력 (구분자 -> 없음) | ex) 1 : 1
 정수 n개 입력 (구분자 -> 없음) (범위 -> 0~9) | ex) 23 : 23
 정수 n개 입력 (구분자 -> 공백) | ex) 4 5 : 4 5
@@ -389,5 +392,6 @@ n o
 문자열 1개 출력 (구분자 -> 없음) : "fg"
 문자열 n개 출력 (구분자 -> 공백, 공백을 포함하지 않는 문자열) : "hi" "jk"
 문자열 n개 출력 (구분자 -> Enter, 공백을 포함하는 문자열) : "l m" "n o"
+
 */
 ```
