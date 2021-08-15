@@ -2,6 +2,6 @@
 
 ## 목차
 
-- [1. 자바]()
-- [2. 자바개발환경 구추갛기]()
-- [3. 자바로 프로그램 작성하기]()
+- [1. 자바](https://github.com/0xe82de/Study/blob/main/%EC%9E%90%EB%B0%94%EC%9D%98%20%EC%A0%95%EC%84%9D/01%20%EC%9E%90%EB%B0%94%EB%A5%BC%20%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0%20%EC%A0%84%EC%97%90/1.%20%EC%9E%90%EB%B0%94.md)
+- [2. 자바개발환경 구축하기](https://github.com/0xe82de/Study/blob/main/%EC%9E%90%EB%B0%94%EC%9D%98%20%EC%A0%95%EC%84%9D/01%20%EC%9E%90%EB%B0%94%EB%A5%BC%20%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0%20%EC%A0%84%EC%97%90/2.%20%EC%9E%90%EB%B0%94%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD%20%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0.md)
+- [3. 자바로 프로그램 작성하기](https://github.com/0xe82de/Study/blob/main/%EC%9E%90%EB%B0%94%EC%9D%98%20%EC%A0%95%EC%84%9D/01%20%EC%9E%90%EB%B0%94%EB%A5%BC%20%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0%20%EC%A0%84%EC%97%90/3.%20%EC%9E%90%EB%B0%94%EB%A1%9C%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8%20%EC%9E%91%EC%84%B1%ED%95%98%EA%B8%B0.md)
