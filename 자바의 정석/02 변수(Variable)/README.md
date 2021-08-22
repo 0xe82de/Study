@@ -1,6 +1,8 @@
 # 01 변수(Variable)
 
-## 목차
+## Categories
 
-- [1. 변수(variable)](<https://github.com/0xe82de/Study/blob/main/%EC%9E%90%EB%B0%94%EC%9D%98%20%EC%A0%95%EC%84%9D/02%20%EB%B3%80%EC%88%98(Variable)/1.%20%EB%B3%80%EC%88%98(variable).md>)
-- [2. 변수와 타입](<https://github.com/0xe82de/Study/blob/main/%EC%9E%90%EB%B0%94%EC%9D%98%20%EC%A0%95%EC%84%9D/02%20%EB%B3%80%EC%88%98(Variable)/2.%20%EB%B3%80%EC%88%98%EC%99%80%20%ED%83%80%EC%9E%85.md>)
+| 순번 | 제목                                                                                                                                                                                                    |
+| :--: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|  1   | [변수(variable)](<https://github.com/0xe82de/Study/blob/main/%EC%9E%90%EB%B0%94%EC%9D%98%20%EC%A0%95%EC%84%9D/02%20%EB%B3%80%EC%88%98(Variable)/1.%20%EB%B3%80%EC%88%98(variable).md>)                  |
+|  2   | [변수와 타입](<https://github.com/0xe82de/Study/blob/main/%EC%9E%90%EB%B0%94%EC%9D%98%20%EC%A0%95%EC%84%9D/02%20%EB%B3%80%EC%88%98(Variable)/2.%20%EB%B3%80%EC%88%98%EC%99%80%20%ED%83%80%EC%9E%85.md>) |
