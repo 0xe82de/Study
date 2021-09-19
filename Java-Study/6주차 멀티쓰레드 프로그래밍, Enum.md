@@ -15,7 +15,7 @@
 
 - [enum 정의하는 방법](#enum-정의하는-방법)
 - [enum이 제공하는 메소드 (values()와 valueOf())](#enum이-제공하는-메소드-values와-valueOf)
-- [java.lang.Enum](#java-lang-Enum)
+- [java.lang.Enum](#javalangEnum)
 - [EnumSet](#EnumSet)
 
 # 멀티쓰레드 프로그래밍
