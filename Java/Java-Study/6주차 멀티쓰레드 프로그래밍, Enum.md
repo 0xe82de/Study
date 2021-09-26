@@ -1,6 +1,6 @@
 # 6주차 멀티쓰레드 프로그래밍, Enum
 
-> 참고: [자바의 정석](https://cafe.naver.com/javachobostudy), [자바의 정석 정리](https://github.com/0xe82de/Study/tree/main/%EC%9E%90%EB%B0%94%EC%9D%98%20%EC%A0%95%EC%84%9D)
+> 참고: [자바의 정석](https://cafe.naver.com/javachobostudy), [자바의 정석 정리](https://github.com/0xe82de/Study/tree/main/Java/%EC%9E%90%EB%B0%94%EC%9D%98%20%EC%A0%95%EC%84%9D)
 
 ## Categories
 
@@ -190,7 +190,7 @@ public static final int NORM_PRIORITY = 5 // 보통우선순위
 
 이러한 상황을 방지하기 위하여 도입된 개념이 바로 `임계 영역(critical section)`과 `잠금(락, lock)`입니다.
 
-[더보기](<https://github.com/0xe82de/Study/blob/main/%EC%9E%90%EB%B0%94%EC%9D%98%20%EC%A0%95%EC%84%9D/13%20%EC%93%B0%EB%A0%88%EB%93%9C(Thread)/9.%20%EC%93%B0%EB%A0%88%EB%93%9C%EC%9D%98%20%EB%8F%99%EA%B8%B0%ED%99%94.md>)
+[더보기](<https://github.com/0xe82de/Study/blob/main/Java/%EC%9E%90%EB%B0%94%EC%9D%98%20%EC%A0%95%EC%84%9D/13%20%EC%93%B0%EB%A0%88%EB%93%9C(Thread)/9.%20%EC%93%B0%EB%A0%88%EB%93%9C%EC%9D%98%20%EB%8F%99%EA%B8%B0%ED%99%94.md>)
 
 ## 데드락
 
