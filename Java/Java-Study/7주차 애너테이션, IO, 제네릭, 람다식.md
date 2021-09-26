@@ -21,9 +21,8 @@
 ### [제네릭](#제네릭)
 
 - [제네릭 사용법](#제네릭-사용법)
-- [제네릭 주요 개념 (바운디드 타입, 와일드 카드)](#제네릭-주요-개념-바운디드-타입-와일드-카드)
+- [제네릭 주요 개념](#제네릭-주요-개념)
 - [제네릭 메소드 만들기](#제네릭-메소드-만들기)
-- [Erasure](#Erasure)
 
 ### [람다식](#람다식)
 
@@ -220,11 +219,202 @@ public @interface FunctionalInterface {}
 
 ## 제네릭 사용법
 
-## 제네릭 주요 개념 (바운디드 타입, 와일드 카드)
+제네릭 타입으로 클래스를 선언하는 방법은 다음과 같습니다.
+
+```java
+// 지네릭 미사용
+class Box {
+    Object item;
+    void setItem(Object item) {
+        this.item = item;
+    }
+    Object getItem() {
+        return item;
+    }
+}
+
+// 지네릭 사용
+class Box<T> { // 지네릭 타입 T를 선언
+    T item;
+    void setItem(T item) {
+        this.item = item;
+    }
+    T getItem( {
+        return item;
+    })
+}
+```
+
+위의 코드에서 사용된 `T`를 `타입 변수(type vaiable)`라고 하며 `Type`의 첫 글자에서 따온 것입니다.
+
+타입 변수는 `T`가 아닌 다른 것을 사용해도 되는데, `ArrayList<E>`의 경우 타입 변수 `E`는 `Element(요소)`의 첫 글자를 따서 사용할 수 있습니다. 또한, `Map<K, V>`와 같이 타입 변수를 여러개 사용할 수 있는데, `K`는 `Key(키)`를 의미하고, `V`는 `Value(값)`을 의미합니다.
+
+무조건 `T`를 사용하기보다 상황에 맞는 문자를 선택해서 사용하면 됩니다. 기호의 종류만 다를 뿐 `임의의 참조형 타입`을 의미한다는 것은 모두 같습니다.
+
+지네릭 클래스의 `Box` 클래스의 객체를 생성할 때는 다음과 같이 참조변수와 생성자에 타입 `T` 대신에 사용할 실제 타입을 지정해줘야 합니다.
+
+```Java
+Box<String> box = new Box<String>(); // 타입 T 대신에 실제 타입을 지정한다.
+box.setItem(new Object()); // Error. 위쪽 코드에서 String으로 지정하였으므로, String 이외의 타입은 불가하다.
+box.setItem("ABC"); // Good. String 타입이므로 가능하다.
+String item = box.getItem(); // 형변환이 필요없다.
+```
+
+지네릭이 도입되기 이전의 코드와 호환을 위해 지네릭 클래스임에도 불구하고 예전의 방식으로 객체를 생성하는 것이 허용된다.
+
+```Java
+Box box = new Box(); // T는 Object로 간주된다.
+box.setItem("ABC"); // 경고. unchecked or unsafe operation
+box.setItem(new Object()); // 경고. unchecked or unsafe operation
+
+// 아래와 같이 변수 T에 Object 타입을 지정하면, 경고는 발생하지 않는다.
+Box<Object> box = new Box<Object>();
+box.setItem("ABC");
+box.setItem(new Object());
+```
+
+## 제네릭 주요 개념
+
+### 와일드 카드
+
+매개변수에 과일박스를 대입하면 주스를 만들어서 반환하는 `Juicer`라는 클래스가 있고, 이 클래스에는 과일을 주스로 만들어서 반환하는 `makeJuice()`라는 `static` 메서드가 다음과 같이 정의되어 있습니다.
+
+```java
+class Juicer {
+    static Juice makeJuice(FruitBox<Fruit> box) { // <Fruit>으로 지정
+        String tmp = "";
+        for (Fruit f : box.getList()) tmp += f + " ";
+        return new Juice(tmp);
+    }
+}
+```
+
+`Juicer` 클래스는 지네릭 클래스가 아닙니다. 지네릭 클래스라 해도 `static` 메서드에는 타입 매개변수 `T`를 매개변수에 사용할 수 없으므로 아예 지네릭스를 적용하지 않던가, 위와 같이 타입 매개변수 대신, 특정 타입을 지정해줘야 합니다.
+
+```java
+FruitBox<Fruit> fruitBox = new FruitBox<Fruit>();
+FruitBox<Apple> appleBox = new FruitBox<Apple>();
+
+System.out.println(Juicer.makeJuice(fruitBox)); // Good. FruitBox<Fruit>
+System.out.println(Juicer.makeJuice(appleBox)); // Error. FruitBox<Apple>
+```
+
+이렇게 지네릭 타입을 `FruitBox<Fruit>`로 고정하면, 위의 코드에서 알 수 있듯이 `FruitBox<Apple>` 타입의 객체는 `makeJuice()`의 매개변수가 될 수 없으므로, 다음과 같이 오버로딩할 수 밖에 없습니다.
+
+```java
+static Juice makeJuice(FruitBox<Fruit> box) { // Error.
+    String tmp = "";
+    for (Fruit f : box.getList()) tmp += f + " ";
+    return new Juice(tmp);
+}
+static Juice makeJuice(FruitBox<Apple> box) { // Error.
+    String tmp = "";
+    for (Fruit f : box.getList()) tmp += f + " ";
+    return new Juice(tmp);
+}
+```
+
+하지만 위와 같이 오버로딩하면, 컴파일 에러가 발생하는데, 지네릭 타입이 다른 것만으로 오버로딩이 성립하지 않기 때문입니다 지네릭 타입은 컴파일러가 컴파일할 때만 사용하고 제거해버리기 때문에, 위의 두 메서는 오버로딩이 아니라 `메서드 중복 정의`입니다. 이럴 때 사용할 수 있는 것이 `와일드 카드`이며, 와일드 카드는 기호 `?`로 표현하는데, 와일드 카드는 어떠한 타입도 될 수 있습니다.
+
+| 와일드 카드   | 설명                                                   |
+| ------------- | ------------------------------------------------------ |
+| <? extends T> | 와일드 카드의 상한 제한. T와 그 자손들만 가능          |
+| <? super T>   | 와일드 카드의 하한 제한. T와 그 조상들만 가능          |
+| <?>           | 제한 없음. 모든 타입이 가능. <? extends Object>와 동일 |
+
+> 참고 : 지네릭 클래스와 달리 와일드 카드에는 `&`를 사용할 수 없습니다.
+
+와일드 카드를 적용하면 다음과 같이 코드를 작성할 수 있습니다.
+
+```java
+static Juice makeJuice(FruitBox<? extends Fruit> box) {
+    String tmp = "";
+    for (Fruit f : box.getList()) tmp += f + " ";
+    return new Juice(tmp);
+}
+```
+
+이제 위 메서드의 매개변수로 `FruitBox<Fruit>` 뿐만 아니라, `FruitBox<Apple>`와 `FruitBox<Grape>`도 가능하게 됩니다.
 
 ## 제네릭 메소드 만들기
 
-## Erasure
+메서드의 선언부에 지네릭 타입이 선언된 메서드를 지네릭 메서드라 합니다. 지네릭 타입의 선언 위치는 반환 타입 바로 앞입니다.
+
+```java
+static <T> void sort(List<T> list, Comparator<? super T> c)
+```
+
+지네릭 클래스에 정의된 타입 매개변수와 지네릭 메서드에 정의된 타입 매개변수는 전혀 별개의 것인데, 같은 타입 문자 `T`를 사용해도 같은 것이 아니라는 것에 주의해야 합니다.
+
+```java
+class FruitBox<T> {
+    // ...
+    static <T> void sort (List<T> list, Comparator<? super T> c) {
+        // ...
+    }
+}
+```
+
+위의 코드에서 지네릭 클래스 `FruitBox`에 선언된 타입 매개변수 `T`와 지네릭 메서드 `sort()`에 선언된 타입 매개변수 `T`는 타입 문자만 같을 뿐이고, 서로 다릅니다. 또한, `sort()` 메서드가 `static` 메서드인데, `static` 멤버에는 타입 매개변수를 사용할 수 없지만, 메서드에 지네릭 타입을 선언하고 사용하는 것은 가능합니다.
+
+메서드에 선언된 지네릭 타입은 지역 변수를 선언한 것과 같다고 생각하면 이해하기 쉽습니다. 이 타입 매개변수는 메서드 내에서만 지역적으로 사용될 것이므로 메서드가 `static`이건 아니건 상관이 없습니다.
+
+```java
+// 지네릭 메서드 변경 전
+static Juice makeJuice(FruitBox<? extends Fruit> box) {
+    String tmp = "";
+    for (Fruit f : box.getList()) tmp += f + " ";
+    return new Juice(tmp);
+}
+
+// 지네릭 메서드 변경 후
+static <T extends Fruit> Juice makeJuice(FruitBox<T> box) {
+    String tmp = "";
+    for (Fruit f : box.getList()) tmp += f + " ";
+    return new Juice(tmp);
+}
+```
+
+이제 이 메서드를 호출할 때는 아래와 같이 타입 변수에 타입을 대입해야 합니다.
+
+```java
+FruitBox<Fruit> fruitBox = new FruitBox<Fruit>();
+FruitBOx<Apple> appleBox = new FruitBox<Apple>();
+
+System.out.println(Juicer.<Fruit>makeJuice(fruitBox));
+System.out.println(Juicer.<Apple>makeJuice(appleBox));
+```
+
+하지만 대부분의 경우 컴파일러가 타입을 추정할 수 있기 때문에 생략할 수는 있습니다.
+
+```java
+// 타입 생략 가능
+System.out.println(Juicer.makeJuice(fruitBox));
+System.out.println(Juicer.makeJuice(appleBox));
+```
+
+한 가지 주의할 점으로는 지네릭 메서드를 호출할 때, 대입된 타입을 생략할 수 없는 경우에는 참조변수나 클래스 이름을 생략할 수 없다는 것입니다.
+
+```java
+System.out.println(<Fruit>makeJuice(fruitBox)); // Error. 클래스 이름 생략불가
+System.out.println(this.<Fruit>makeJuice(fruitBox)); // Good.
+System.out.println(Juicer.<Fruit>makeJuice(fruitBox)); // Good.
+```
+
+같은 클래스 내에 있는 멤버들끼리는 `this.`이나 `클래스이름.`을 생략하고 메서드 이름만으로 호출이 가능하지만, 대입된 타입이 있을 때는 반드시 써줘야 합니다.
+
+지네릭 메서드는 매개변수의 타입이 복잡할 때 유용합니다.
+
+```java
+// 지네릭 메서드 변경 전
+public static void printAll(ArrayList<? extends Product> list, ArrayList<? extends Product> list2) {
+    // ...
+}
+// 지네릭 메서드 변경 후
+public static <T extends Product> void printAll(ArrayList<T> list, ArrayList<T> list2) {
+    // ...
+}
+```
 
 # 람다식
 
