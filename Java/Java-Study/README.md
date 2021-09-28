@@ -1,6 +1,10 @@
 # Java-Study
 
-[라이브 스터디](https://github.com/whiteship/live-study) 참고
+백기선님의 [라이브 스터디](https://github.com/whiteship/live-study)를 참고하여 `Java`를 공부하고 정리하였습니다(`자바의 정석`, 구글링 활용).
+
+저를 포함하여 5명이 스터디에 참여하였고, 정리한 내용은 아래 링크에 모아두었습니다.
+
+[링크](https://github.com/Baemung/Java-Masta/issues)
 
 ## Contents
 
