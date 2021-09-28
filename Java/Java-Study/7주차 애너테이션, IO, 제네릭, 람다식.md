@@ -418,10 +418,256 @@ public static <T extends Product> void printAll(ArrayList<T> list, ArrayList<T> 
 
 # 람다식
 
+람다식은 `JDK 1.8`에서 추가되었으며, 이로 인해 자바는 객체지향언어인 동시에 함수형 언어가 되었습니다. 람다식은 메서드를 하나의 식으로 표현한 것이며, 메서드의 이름과 반환값이 없어지므로 `익명 함수(anonymous function)`이라고도 합니다.
+
+```java
+int[] arr = new int[5];
+
+// 람다식 표현
+Arrays.setAll(arr, (i) -> (int)(Math.random() * 5) + 1);
+
+// 메서드 표현
+int method() {
+    return (int)(Math.random() * 5) + 1;
+}
+```
+
 ## 람다식 사용법
+
+람다식은 `익명 함수`답게 메서드에서 이름과 반환타입을 제거하고 매개변수 선언부와 몸통 `{}` 사이에 `->`를 추가합니다.
+
+```java
+// 메서드
+반환타입 메서드이름(매개변수 선언) {
+    // ...
+}
+
+// 람다식
+(매개변수 선언) -> {
+    // ...
+}
+```
+
+두 값 중에서 작은 값을 반환하는 메서드 `min`를 람다식으로 변환하면 아래와 같습니다.
+
+```java
+// 메서드
+int min(int a, int b) {
+    return a < b ? a : b;
+}
+
+// 람다식
+(int a, int b) -> {
+    return a < b ? a : b;
+}
+```
+
+반환값이 있는 메서드의 경우, `return`문 대신 `식(expression)`으로 대신 할 수 있습니다. 식의 연산결과가 자동으로 반환값이 되며, `문장(statement)`이 아닌 `식`이므로 끝에 `;`을 붙이지 않습니다.
+
+```java
+// 변경 전
+(int a, int b) -> { return a < b ? a : b; }
+
+// 변경 후
+(int a, int b) -> a < b ? a : b
+```
+
+람다식에 선언된 매개변수의 타입은 추론이 가능한 경우는 생략할 수 있습니다.
+
+```java
+// 생략하지 않은 경우
+(int a, int b) -> a < b ? a : b
+
+// 타입을 생략한 경우
+(a, b) -> a < b ? a : b
+```
+
+아래와 같이 선언된 매개변수가 하나일 때는 괄호 `()`를 생략할 수 있습니다. 반대로 매개변수의 타입이 있을 때는 생략할 수 없습니다.
+
+```java
+(a) -> a * a // Good.
+int a -> a * a // Error.
+```
+
+괄호 `{}` 안의 문장이 하나일 때는 괄호 `{}`를 생략할 수 있습니다. 이 떄 문장의 끝에 `;`을 붙이면 안되고, 괄호 `{}` 안의 문장이 `return`문일 때는 괄호 `{}`를 생략할 수 없습니다.
+
+```java
+// 생략 전
+(String name, int i) -> {
+    System.out.println(name + "=" + i);
+}
+
+// 생략 후
+(String name, int i) -> System.out.println(name + "=" + i); // Good.
+(int a, int b) -> return a < b ? a : b // Error.
+(int a, int b) -> { return a < b ? a : b; } // Good.
+```
 
 ## 항수형 인터페이스
 
+사실 람다식은 익명 클래스의 객체와 동등합니다.
+
+```java
+타입 f = (int a, int b) -> a > b ? a : b;
+```
+
+위의 코드에서 참조변수 f의 타입으로 클래스 또는 인터페이스가 가능합니다. 그리고 람다식과 동등한 메서드가 정의되어 있는 것이어야 합니다. 그래야만 참조변수로 익명 객체(람다식)의 메서드를 호출할 수 있기 때문입니다.
+
+예를 들어, 아래와 같이 `min()`라는 메서드가 정의된 `MyFunction` 인터페이스가 정의되어 있고, 구현체는 그 다음과 같다고 합니다.
+
+```java
+interface MyFunction {
+    public abstract int min(int a, int b);
+}
+
+MyFunction f = new MyFunction() {
+    public int min(int a, int b) {
+        return a < b ? a : b;
+    }
+};
+int big = f.min(6, 1);
+```
+
+`MyFunction` 인터페이스에 정의된 메서드 `min()`는 람다식과 메서드의 선언부가 일치합니다. 따라서 위 코드의 익명 객체를 람다식으로 아래와 같이 대체할 수 있습니다.
+
+```java
+MyFunction f = (int a, int b) -> a < b ? a : b;
+int big = f.min(6, 1);
+```
+
+이처럼 `MyFunction` 인터페이스를 구현한 익명 객체를 람다식으로 대체가 가능한 이유는, 람다식도 실제로는 익명 객체이고, `MyFunction` 인터페이스를 구현한 익명 객체의 메서드 `max()`와 람다식의 매개변수의 타입과 개수, 반환값이 일치하기 때문입니다.
+
+하나의 메서드가 선언된 인터페이스를 정의해서 람다식을 다루는 것은 기존의 자바의 규칙들을 어기지 않으면서 자연스럽습니다. 그에 따라 람다식을 인터페이스로 다루기로 결정되었으며, 람다식을 다루기 위한 인터페이스를 `함수형 인터페이스(functional interface)`라고 부르기로 했습니다.
+
+### 매개변수와 반환타입
+
+```java
+@FunctionalInterface
+interface MyFunction { // 함수형 인터페이스 MyFunction을 정의한다.
+    public abstract int min(int a, int b);
+}
+```
+
+단, 함수형 인터페이스는 하나의 추상 메서드만 정의되어 있어야 한다는 제약이 있습니다. 그래야 람다식과 인터페이스의 메서드가 1:1로 연결될 수 있기 때문입니다. 반면에 `static` 메서드와 `default` 메서드의 개수에는 제약이 없습니다.
+
+```java
+@FunctionalInterface
+interface MyFunction {
+    void myMethod(); // 추상 메서드
+}
+```
+
+위의 코드에서 메서드의 매개변수가 `MyFunction` 타입이면, 이 메서드를 호출할 때 람다식을 참조하는 참조변수를 매개변수로 지정해야한다는 뜻입니다.
+
+```java
+void aMethod(MyFunction f) { // 매개변수의 타입이 함수형 인터페이스
+    f.myMethod(); // MyFunction에 정의된 메서드 호출
+}
+
+MyFunction f = () -> System.out.println("myMethod()");
+aMethod(f);
+```
+
+또는 참조변수 없이 아래와 같이 직접 람다식을 매개변수로 지정하는 것도 가능합니다.
+
+```java
+aMethod(() -> System.out.println("myMethod()")); // 람다식을 매개변수로 지정
+```
+
+그리고 메서드의 반환타입이 함수형 인터페이스타입이라면, 이 함수형 인터페이스의 추상메서드와 동등한 람다식을 가리키는 참조변수를 반환하거나 람다식을 직접 반환할 수 있습니다.
+
+```java
+MyFunction myMethod() {
+    MyFunction f = () -> {};
+    return f;
+    // 위 두 줄을 한 줄로 줄이면
+    return () -> {};
+}
+```
+
+### 형변환
+
+람다식의 타입이 함수형 인터페이스의 타입과 일치하는 것은 아닙니다. 람다식은 익명 객체이고 타입은 있지만 컴파일러가 임의로 이름을 정하기 때문에 알 수 없습니다. 그에 따라 대입 연산자의 양변의 타입을 일치시키기 위해 아래와 같이 형변환이 필요합니다.
+
+```java
+MyFunction f = (MyFunction)(() -> {}); // 양변의 타입이 다르므로 형변환이 필요
+```
+
+람다식은 `MyFunction` 인터페이스를 직접 구현하지 않았지만, 이 인터페이스를 구현한 클래스의 객체와 완전히 동일하기 때문에 위와 같은 형변환을 허용합니다. 그리고 이 형변환은 생략할 수 있습니다.
+
+람다식은 이름이 없을 뿐 분명히 객체인데도, 아래와 같이 `Object` 타입으로 형변환할 수 없습니다. 굳이 변환한다면, 먼저 함수형 인터페이스로 변환해야 합니다.
+
+```java
+Object obj = (Object)(() -> {}); // Error. 함수형 인터페이스로만 형변환 가능
+Object obj = (Object)(MyFunction)(() -> {}); // Good.
+String str = ((Object)(MyFunction)(() -> {})).toString(); // Good.
+```
+
 ## Variable Capture
 
+람다식의 body에서 인자로 넘어온 것 이외의 변수에 접근하는 것을 `Variable Capture`라고 합니다.
+
+람다식에서 지역변수는 다음과 같은 제약사항이 있습니다.
+
+1. `final`로 선언되어야 합니다.
+2. `final`로 선언되어 있지 않는 경우 `effectively final`이어야 합니다. 지역변수의 값이 바뀌면 안됩니다.
+
+이러한 제약사항이 있는 이유는 클래스 내부에 선언된 람다식이 지역변수를 참조할 때는 그 값을 복사해서 사용하기 때문입니다. 이 과정에서 `Variable Capture`가 발생합니다. 외부에서 선언된 변수를 직접 사용하지 않고 내부로 복사해오는 이유는 변수와 객체의 생명 주기와 관련이 있는데, 설명은 아래와 같습니다. [출처](https://wisdom-and-record.tistory.com/66)
+
+"스태틱 변수는 메서드 영역에, 인스턴스 변수는 힙 영역에, 지역 변수는 호출스택에 각각 생성된다. 람다식 또한 익명 객체의 인스턴스이기 때문에 힙 영역에 생성된다. 지역 변수는 해당 변수를 선언한 메서드가 종료되는 순간 메모리에서 사라진다. 하지만 로컬 클래스는 아예 다른 위치에서 생성되기 때문에 생명주기가 메서드와 전혀 상관이 없다. 따라서 스태틱 변수, 인스턴스 변수와 달리 로컬 클래스가 지역 변수를 사용하려고 할때는 해당 지역 변수가 이미 호출스택에서 사라졌을 위험이 항상 존재한다(매개변수도 마찬가지다). 그럼 로컬 클래스는 절대로 외부에서 선언된 변수를 참조할 수 없도록 제약해야 할까? 그런 제약을 걸지 않으면서도 위에서 언급한 위험성을 제거하기 위해서 자바에서는 객체 외부에 선언된 변수의 값을 복사(Variable Capture)하면서 동시에 해당 변수는 반드시 final이어야 한다는 새로운 제약을 만들었다."
+
 ## 메소드, 생성자 레퍼런스
+
+메서드를 람다식으로 간결하게 표현하는 방법을 배웠습니다. 아래의 방법을 통해 람다식을 더 간결하게 표현할 수 있으며, 이를 `메서드 참조`, `생성자 참조`라 합니다.
+
+| 종류                          | 람다                       | 메서드 참조       |
+| ----------------------------- | -------------------------- | ----------------- |
+| static 메서드 참조            | (x) -> ClassName.method(x) | ClassName::method |
+| 인스턴스메서드 참조           | (obj, x) -> obj.method(x)  | ClassName::method |
+| 특정 객체 인스턴스메서드 참조 | (x) -> obj.method(x)       | obj::method       |
+| 생성자                        | () -> new MyClass          | MyClass::new      |
+
+```java
+// 변경 전
+Function<String, Integer> f = (String s) -> Integer.parseInt(s);
+
+// 변경 후
+Function<String, Integer> f = Integer::parseInt; // 메서드 참조
+```
+
+위 메서드 참조에서 람다식의 일부가 생략되었습니다. 하지만, 컴파일러는 생략된 부분을 우변의 `parseInt` 메서드의 선언부로부터, 또는 좌변의 `Function` 인터페이스에 지정된 지네릭 타입으로부터 쉽게 알아낼 수 있습니다.
+
+```java
+// 변경 전
+BiFunction<String, String, Boolean> f = (s1, s2) -> s1.equals(s2);
+
+// 변경 후
+BiFunction<String, String, Boolean> f = String::equals; // 메서드 참조
+```
+
+위 매개변수 `s1`과 `s2`를 생략하면 `equals`만 남는데, 두 개의 `String`을 받아서 `Boolean`을 반환하는 `equals`라는 메서드는 다른 클래스에도 존재할 수 있기 때문에 `equals` 앞에 클래스 이름은 반드시 필요합니다.
+
+메서드 참조를 사용할 수 있는 경우는 한 가지 더 있습니다. 이미 생성된 객체의 메서드를 람다식에서 사용한 경우에는 클래스 이름 대신 그 객체의 참조변수를 적어줘야 합니다.
+
+```java
+MyClass obj = new MyClass();
+Function<String, Boolean> f = (x) -> obj.equals(x); // 람다식
+Function<String, Boolean> f2 = obj::equals; // 메서드 참조
+```
+
+아래는 생성자를 호출하는 람다식을 메서드 참조로 표현한 것입니다.
+
+```java
+Supplier<MyClass> s = () -> new MyClass; // 람다식
+Supplier<MyClass> s = MyClass::new; // 메서드 참조
+```
+
+매개변수가 있는 생성자라면, 매개변수의 개수에 따라 알맞은 함수형 인터페이스를 사용하면 되며, 필요하다면 새로운 함수형 인터페이스를 새로 정의하면 됩니다.
+
+```java
+Function<Integer, MyClass> f = (i) -> new MyClass(i); // 람다식
+Function<Integer, MyClass> f2 = MyClass::new; // 메서드 참조
+
+BiFunction<Integer, String, MyClass> bf = (i, s) -> new MyClass(i, s);
+BiFunction<Integer, String, MyClass> bf2 = MyClass::new; // 메서드 참조
+```
