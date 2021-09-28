@@ -205,15 +205,86 @@ public @interface FunctionalInterface {}
 
 # I/O
 
+`I/O`는 `Input(입력)`과 `출력(Output)`을 말합니다. 데이터를 밖으로 보내는 것이 출력이며, 안으로 데이터를 보내는 것이 입력입니다. 안과 밖의 기준은 `JVM`이며, 입출력을 위해 자바는 `java.io` 패키지를 제공합니다.
+
 ## 스트림 (Stream) / 버퍼 (Buffer) / 채널 (Channel) 기반의 I/O
+
+입출력을 위한 통로를 `스트림(Stream)`이라고 합니다. 스트림은 단방향 통신만 가능하므로 입출력을 수행하기 위해 두 개의 스트림이 필요하며 연속된 데이터의 흐름으로 입출력을 진행하면 다른 작업을 할 수 없는 `블로킹(Blocking)` 상태가 됩니다. `java.io` 패키지에서는 다양한 종류의 스트림 클래스를 제공합니다.
+
+| 스트림                                                                                                     | 설명                    |
+| ---------------------------------------------------------------------------------------------------------- | ----------------------- |
+| InputStream, BufferedInputStream, FileInputStream, OutputStream, BufferedOutputStream, FileOutputStream 등 | Byte 단위의 스트림      |
+| Reader, BufferedReader, FileReader, Writer, BufferedWriter, FileWriter 등                                  | Character 단위의 스트림 |
+
+`JDK 1.4`에서 `NIO(New I/O)`가 추가되었는데, `NIO`는 `버퍼(Buffer)`와 `채널(Channel)` 기반으로 데이터를 처리합니다. `NIO`의 모든 `I/O`는 채널로 시작하며 버퍼로 채널 데이터를 읽을 수 있고, 버퍼에서 채널로 데이터를 쓸 수 있습니다.
+
+`버퍼(Buffer)`는 제한된 크기에 순서대로 데이터를 저장하는 저장소입니다. `byte`, `char`, `int` 등 기본형 데이터 타입을 저장할 수 있습니다. 채널을 통해 데이터를 입출력하게됨으로써 가비지량을 최소화시키고, GC 회수를 줄임으로써 서버의 전체 처리량을 증가시켜줍니다.
+
+`채널(Channel)`은 스트림과 달리 양방향이며, 비동기적입니다. 그리고 데이터를 읽고 쓸때 버퍼가 사용됩니다.
 
 ## InputStream과 OutputStream
 
+`InputStream`은 `Byte` 단위 입력 스트림의 최상위 추상 클래스이며, 모든 바이트 단위 입력 스트림은 이 클래스를 상속받아 만들어집니다. 데이터를 입력받는 기능을 수행합니다.
+
+| 메서드                           | 설명                                                                                                                                         |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| read()                           | 입력 스트림으로부터 1 byte를 읽어서 반환합니다.                                                                                              |
+| read(byte[] b )                  | 입력 스트림으로부터 읽은 bytes를 배열 b에 저장하고 실제로 읽은 bytes 수를 반환합니다.                                                        |
+| read(byte[] b, int off, int len) | 배열 b[off]부터 len개를 저장하고 실제로 읽은 bytes 수인 len개를 반환합니다. 만약 len개를 모두 읽지 못하면 실제로 읽은 bytes 수를 반환합니다. |
+| close()                          | 시스템 자원을 반납하고 입력스트림들 닫습니다.                                                                                                |
+
+`OutputStream`은 `Byte` 단위 출력 스트림의 최상위 추상 클래스이며, 모든 바이트 단위 출력 스트림은 이 클래스를 상속받아 만들업집니다. 데이터를 출력하는 기능을 수행합니다.
+
+| 메서드                            | 설명                                                        |
+| --------------------------------- | ----------------------------------------------------------- |
+| write(int b)                      | 출력 스트림으로 1 byte를 내보냅니다.                        |
+| write(byte[] b)                   | 출력 스트림으로 배열 b를 내보냅니다.                        |
+| write(byte[] b, int off, int len) | 출력 스트림으로 배열 b[off]부터 len개의 bytes를 내보냅니다. |
+| flush()                           | 버퍼에 존재하는 모든 bytes를 출력합니다.                    |
+| close()                           | 시스템 자원을 반납하고 출력 스트림을 닫습니다.              |
+
 ## Byte와 Character 스트림
+
+| 스트림    | 설명                                                                | 데이터 단위(byte) |
+| --------- | ------------------------------------------------------------------- | ----------------- |
+| Byte      | 이미지, 동영상 등을 송수신할 때 주로 사용됩니다.                    | 1                 |
+| Character | 일반적인 텍스트 및 `JSON`, `HTML` 등을 송수신할 때 주로 사용됩니다. | 2                 |
 
 ## 표준 스트림 (System.in, System.out, System.err)
 
+표준 스트림의 입출력은 콘소을 통한 데이터 입출력을 말합니다. 자바에서는 표준 스트림으로 `System.in`, `System.out`, `System.err` 세 가지를 제공하며, 내부적으로는 `BufferedInputStream`, `BufferedOutputStream`을 사용합니다.
+
+```java
+// 콘솔로부터 입력을 받는 스트림을 스캐너에 할당한다.
+Scanner sc = new Scanner(System.in);
+int num = sc.nextInt();
+
+try {
+    // 콘솔로 출력한다. (정상)
+    System.out.println(10 / num);
+} catch (Exception e) {
+    // 콘솔로 출력한다. (에러)
+    System.err.println("Error");
+}
+```
+
 ## 파일 읽고 쓰기
+
+텍스트 파일의 경우 `Character` 단위 스트림 클래스를 사용하고, 바이너리 파일의 경우 `Byte` 단위 스트림 클래스를 사용하여 파일을 읽고 쓸 수 있습니다.
+
+```java
+// 텍스트 파일
+BufferedReader br = new BufferedReader(new FileReader("ti.txt"));
+BufferedWriter bw = new BufferedWriter(new FileWriter("tw.txt"));
+String data;
+while ((data = br.readLine()) != null) bw.write(s + "\n");
+
+// 바이너리 파일
+BufferedInputStream bs = new BufferedInputStream(new FileInputStream("bi.png"));
+BufferedOutputStream bw = new BufferedOutputStream(new FileOutputStream("bw.png"));
+byte[] data = new byte[16384];
+while (bs.read(data) != -1) bw.write(data);
+```
 
 # 제네릭
 
