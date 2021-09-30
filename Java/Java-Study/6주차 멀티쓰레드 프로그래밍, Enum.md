@@ -1,8 +1,6 @@
-# 6주차 멀티쓰레드 프로그래밍, Enum
-
 > 참고: [자바의 정석](https://cafe.naver.com/javachobostudy), [자바의 정석 정리](https://github.com/0xe82de/Study/tree/main/Java/%EC%9E%90%EB%B0%94%EC%9D%98%20%EC%A0%95%EC%84%9D)
 
-## Categories
+# Contents
 
 ### [멀티쓰레드 프로그래밍](#멀티쓰레드-프로그래밍)
 
@@ -19,6 +17,8 @@
 - [java.lang.Enum](#javalangEnum)
 - [enum이 제공하는 메소드 (values()와 valueOf())](#enum이-제공하는-메소드-values와-valueOf)
 - [EnumSet](#EnumSet)
+
+# 6주차 멀티쓰레드 프로그래밍, Enum
 
 # 멀티쓰레드 프로그래밍
 
