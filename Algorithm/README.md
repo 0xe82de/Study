@@ -8,3 +8,4 @@
 | --------------------------------------------------------------------------- | --------------------------------- |
 | [Recursive](https://github.com/0xe82de/Study/tree/main/Algorithm/Recursive) | `재귀` 관련 알고리즘 공부 및 정리 |
 | [Search](https://github.com/0xe82de/Study/tree/main/Algorithm/Search)       | `탐색` 관련 알고리즘 공부 및 정리 |
+| [Sort](https://github.com/0xe82de/Study/tree/main/Algorithm/Sort)           | `정렬` 관련 알고리즘 공부 및 정리 |
