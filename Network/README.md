@@ -1,7 +1,7 @@
-# TIL / Network
-
-📝 Today I Learned Network.
+# Network
 
 ## Contents
 
-- [IPv4&IPv6.md](https://github.com/0xe82de/TIL/blob/master/Network/IPv4&IPv6.md)
+| 순번 | 제목                                                                             |
+| :--: | -------------------------------------------------------------------------------- |
+|  1   | [IPv4 & IPv6](https://github.com/0xe82de/Study/blob/main/Network/IPv4%26IPv6.md) |
