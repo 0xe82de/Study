@@ -9,6 +9,13 @@
 | [Recursive](https://github.com/0xe82de/Study/tree/main/Algorithm/Recursive) | `재귀` 관련 알고리즘 공부 및 정리 |
 | [Search](https://github.com/0xe82de/Study/tree/main/Algorithm/Search)       | `탐색` 관련 알고리즘 공부 및 정리 |
 
+## Data Structure
+
+| 구분                                                                                | 설명                                     |
+| ----------------------------------------------------------------------------------- | ---------------------------------------- |
+| [ArrayList](https://github.com/0xe82de/Study/tree/main/Data Structure/ArrayList)    | `순차 리스트` 관련 알고리즘 공부 및 정리 |
+| [LinkedList]](https://github.com/0xe82de/Study/tree/main/Data Structure/LinkedList) | `연결 리스트` 관련 알고리즘 공부 및 정리 |
+
 ## Java
 
 | 구분                                                                                                            | 설명                                            |
