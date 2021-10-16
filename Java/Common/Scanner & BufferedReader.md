@@ -1,4 +1,4 @@
-# Scanner&BufferedReader
+# Scanner & BufferedReader
 
 ## Scanner
 
