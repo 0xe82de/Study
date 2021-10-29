@@ -18,7 +18,6 @@ public class BubbleSort {
         BubbleSort(arr);
         bw.write("정렬 후 : " + Arrays.toString(arr));
 
-        // io close
         bw.close();
     }
 
