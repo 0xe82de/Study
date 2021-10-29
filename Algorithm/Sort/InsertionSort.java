@@ -18,7 +18,6 @@ public class InsertionSort {
         InsertionSort(arr);
         bw.write("정렬 후 : " + Arrays.toString(arr));
 
-        // io close
         bw.close();
     }
 
