@@ -15,13 +15,13 @@ public class InsertionSort {
         final int N = arr.length;
 
         bw.write("정렬 전 : " + Arrays.toString(arr) + "\n");
-        InsertionSort(arr);
+        insertionSort(arr);
         bw.write("정렬 후 : " + Arrays.toString(arr));
 
         bw.close();
     }
 
-    private static void InsertionSort(int[] arr) {
+    private static void insertionSort(int[] arr) {
         final int SIZE = arr.length;
         int temp, j;
         for (int i = 1; i < SIZE; ++i) {
