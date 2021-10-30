@@ -15,13 +15,13 @@ public class BubbleSort {
         final int N = arr.length;
 
         bw.write("정렬 전 : " + Arrays.toString(arr) + "\n");
-        BubbleSort(arr);
+        bubbleSort(arr);
         bw.write("정렬 후 : " + Arrays.toString(arr));
 
         bw.close();
     }
 
-    private static void BubbleSort(int[] arr) {
+    private static void bubbleSort(int[] arr) {
         final int SIZE = arr.length - 1;
         int temp;
         for (int i = 0; i < SIZE; ++i) {
