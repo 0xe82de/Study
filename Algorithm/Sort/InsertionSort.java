@@ -9,10 +9,8 @@ public class InsertionSort {
 
     public static void main(String[] args) throws IOException {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
 
         int[] arr = {5, 4, 3, 2, 1};
-        final int N = arr.length;
 
         bw.write("정렬 전 : " + Arrays.toString(arr) + "\n");
         insertionSort(arr);
@@ -21,6 +19,10 @@ public class InsertionSort {
         bw.close();
     }
 
+    /**
+     * 삽입 정렬
+     * @param arr : 정렬할 배열
+     */
     private static void insertionSort(int[] arr) {
         final int SIZE = arr.length;
         int temp, j;
