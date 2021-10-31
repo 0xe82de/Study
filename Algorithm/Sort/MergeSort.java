@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.Arrays;
 
 /**
- * 거품 정렬
+ * 병합 정렬
  */
 
 public class MergeSort {
