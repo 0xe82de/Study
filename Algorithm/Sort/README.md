@@ -6,5 +6,6 @@
 
 | 순번 | 제목                                                                                      |
 | :--: | ----------------------------------------------------------------------------------------- |
-|  1   | [삽입 정렬](https://github.com/0xe82de/Study/blob/main/Algorithm/Sort/InsertionSort.java) |
-|  2   | [거품 정렬](https://github.com/0xe82de/Study/blob/main/Algorithm/Sort/BubbleSort.java)    |
+|  1   | [거품 정렬](https://github.com/0xe82de/Study/blob/main/Algorithm/Sort/BubbleSort.java)    |
+|  2   | [병합 정렬](https://github.com/0xe82de/Study/blob/main/Algorithm/Sort/MergeSort.java)     |
+|  3   | [삽입 정렬](https://github.com/0xe82de/Study/blob/main/Algorithm/Sort/InsertionSort.java) |
