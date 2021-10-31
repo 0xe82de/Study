@@ -9,10 +9,8 @@ public class BubbleSort {
 
     public static void main(String[] args) throws IOException {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
 
         int[] arr = {5, 4, 3, 2, 1};
-        final int N = arr.length;
 
         bw.write("정렬 전 : " + Arrays.toString(arr) + "\n");
         bubbleSort(arr);
@@ -21,6 +19,10 @@ public class BubbleSort {
         bw.close();
     }
 
+    /**
+     * 거품 정렬
+     * @param arr : 정렬할 배열
+     */
     private static void bubbleSort(int[] arr) {
         final int SIZE = arr.length - 1;
         int temp;
