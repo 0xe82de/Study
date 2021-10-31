@@ -55,11 +55,11 @@ public class MergeSort {
         for (; k <= right; ++k) {
             // 오른쪽 부분 배열의 모든 요소가 삽입되면 왼쪽 부분 배열를 sorted에 넣는다.
             if (j > right) sorted[k] = arr[i++];
-                // 왼쪽 부분 배열의 모든 요소가 모두 삽입되면 오른쪽 부분 배열를 soted에 넣는다.
+            // 왼쪽 부분 배열의 모든 요소가 모두 삽입되면 오른쪽 부분 배열를 soted에 넣는다.
             else if (i > mid) sorted[k] = arr[j++];
-                // 왼쪽 배열 요소가 오른쪽 배열 요소보다 작으면 sorted에 왼쪽 배열 요소를 넣는다.
+            // 왼쪽 배열 요소가 오른쪽 배열 요소보다 작으면 sorted에 왼쪽 배열 요소를 넣는다.
             else if (arr[i] <= arr[j]) sorted[k] = arr[i++];
-                // 오른쪽 배열 요소가 왼족 배열 요소보다 작으면 sorted에 오른쪽 배열 요소를 넣는다.
+            // 오른쪽 배열 요소가 왼족 배열 요소보다 작으면 sorted에 오른쪽 배열 요소를 넣는다.
             else sorted[k] = arr[j++];
         }
 
