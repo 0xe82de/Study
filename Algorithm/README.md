@@ -1,6 +1,6 @@
 # Algorithm
 
-알고리즘 구현
+알고리즘 공부 및 구현
 
 ## Contents
 
