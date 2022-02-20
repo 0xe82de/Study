@@ -64,16 +64,16 @@
 ### ArrayList vs LinkedList 성능 비교
 
 - 데이터의 추가/삭제
-  - 순차적으로 데이터를 추가/삭제하는 경우 ArrayList가 더 빠르다.
-  - 중간에 데이터를 추가/삭제하는 경우 LinkedList가 더 빠르다.
+  - 순차적으로 데이터를 추가/삭제하는 경우 `ArrayList`가 더 빠르다.
+  - 중간에 데이터를 추가/삭제하는 경우 `LinkedList`가 더 빠르다.
   - 데이터의 양이 적을 경우 두 컬렉션의 성능이 비슷할 수 있다.
 - 접근
-  - 특정 인덱스에 접근할 때는 ArrayList가 더 빠르다.
+  - 특정 인덱스에 접근할 때는 `ArrayList`가 더 빠르다.
 
 ## Stack, Queue
 
-- 스택은 순차적으로 데이터를 추가하고 삭제하므로 ArrayList와 같은 배열 기반의 컬렉션 클래스로 구현하는 것이 적합하다.
-- 큐는 데이터를 꺼낼 때 항상 첫 번째 데이터를 삭제하므로, LinkedList로 구현하는 것이 적합하다.
+- `스택`은 순차적으로 데이터를 추가하고 삭제하므로 `ArrayList`와 같은 배열 기반의 컬렉션 클래스로 구현하는 것이 적합하다.
+- `큐`는 데이터를 꺼낼 때 항상 첫 번째 데이터를 삭제하므로, `LinkedList`로 구현하는 것이 적합하다.
 
 ### 스택의 메서드
 
@@ -89,7 +89,7 @@
 
 ## Iterator, ListIterator, Enumeration
 
-Iterator, ListIterator, Enumeration은 모두 컬렉션에 저장된 요소에 접근하는데 사용되는 인터페이스다. Enumeration은 Iterator의 구버전이며, ListIterator는 Iterator의 기능을 향상시킨 것이다.
+`Iterator`, `ListIterator`, `Enumeration`은 모두 컬렉션에 저장된 요소에 접근하는데 사용되는 인터페이스다. `Enumeration`은 `Iterator`의 구버전이며, `ListIterator`는 `Iterator`의 기능을 향상시킨 것이다.
 
 ### Iterator 인터페이스의 메서드
 
@@ -119,7 +119,7 @@ Iterator it = map.entrySet().iterator();
 
 ### ListIterator, Enumeration
 
-ListIterator는 Iterator를 상속받아서 기능을 추가한 것으로, 양방향으로의 이동이 가능하다. 다만, ArrayList나 LinkedList와 같이 List 인터페이스를 구현한 컬렉션에서만 사용할 수 있다.
+`ListIterator`는 `Iterator`를 상속받아서 기능을 추가한 것으로, 양방향으로의 이동이 가능하다. 다만, `ArrayList`나 `LinkedList`와 같이 `List` 인터페이스를 구현한 컬렉션에서만 사용할 수 있다.
 
 ### ListIterator의 메서드
 
@@ -199,7 +199,7 @@ Arrays.deepEquals(str2D, str2D2); // true
 
 ### 배열을 List로 변환 - asList(Object.. a)
 
-`asList()`는 배열을 List에 담아서 반환한다. 매개변수의 타입이 가변인수이므로 배열 생성 없이 저장할 요소들만 나열하는 것도 가능하다.
+`asList()`는 배열을 `List`에 담아서 반환한다. 매개변수의 타입이 가변인수이므로 배열 생성 없이 저장할 요소들만 나열하는 것도 가능하다.
 
 ```java
 List list = Arrays.asList(new Integer[] {1, 2, 3, 4, 5}); // list = [1, 2, 3, 4, 5];
@@ -207,7 +207,7 @@ List list = Arrays.asList(1, 2, 3, 4, 5); // list = [1, 2, 3, 4, 5];
 list.add(6); // UnsupportedOperationException 예외 발생
 ```
 
-한 가지 주의할 점은 `asList()`가 반환한 List의 크기를 변경할 수 없다는 것이다. 추가 또는 삭제가 불가능하며 저장된 내용은 변경할 수 있다. 만약 크기를 변경할 수 있는 List가 필요하다면 다음과 같이 하면 된다.
+한 가지 주의할 점은 `asList()`가 반환한 `List`의 크기를 변경할 수 없다는 것이다. 추가 또는 삭제가 불가능하며 저장된 내용은 변경할 수 있다. 만약 크기를 변경할 수 있는 `List`가 필요하다면 다음과 같이 하면 된다.
 
 ```java
 List list = new ArrayList(Arrays.asList(1, 2, 3, 4, 5));
@@ -331,3 +331,42 @@ int hashCode2 = p2.hashCode();
 3. `equals()` 메서드를 호출했을 때 `false`를 반환하는 두 객체는 `hashCode` 호출에 대해 같은 `int` 값을 반환해도 괜찮지만, `해싱(hashing)`을 사용하는 컬렉션의 성능을 향상시키기 위해 다른 `int` 값을 반환하는 것이 좋다.
 
 서로 다른 객체에 대해서 해시 값이 중복된느 경우가 많아지면 해싱을 사용하는 `Hashtable`, `HashMap`과 같은 컬렉션의 검색속도가 떨어진다.
+
+## TreeSet
+
+`TreeSet`은 `이진 검색 트리(binary search tree)`라는 자료구조의 형태로 데이터를 저장하는 컬렉션이다. 이진 검색 트리는 정렬, 검색, 범위검색에 높은 성능을 보이는 자료구조이며 `TreeSet`은 이진 검색 트리의 성능을 향상시킨 `레드-블랙 트리(Red-Black tree)`로 구현되어 있다.
+
+`Set` 인터페이스를 구현했으므로 중복된 데이터의 저장을 허용하지 않으며 정렬된 위치에 저장하므로 저장순서를 유지하지도 않는다.
+
+### 이진 검색 트리의 특징
+
+- 모든 노드는 최대 두 개의 자식노드를 가질 수 있다.
+- 왼쪽 자식노드의 값은 부모노드의 값보다 작고 오른쪽 자식노드의 값을 부모노드의 값보다 커야 한다.
+- 노드의 추가/삭제에 `LinkedList`보다 시간이 더 걸린다(순차적으로 저장하지 않기 때문이다.)
+- 검색(범위검색)고 정렬에 유리하다.
+- 중복된 값을 저장하지 못한다.
+
+### TreeSet의 생성자와 메서드
+
+| 생성자 또는 메서드                                                                             | 설명                                                                                                                        |
+| ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| TreeSet()                                                                                      | 기본 생성자                                                                                                                 |
+| TreeSet(Collection c)                                                                          | 주어진 컬렉션을 저장하는 TreeSet을 생성한다.                                                                                |
+| TreeSet(Comparator comp)                                                                       | 주어진 정렬조건으로 정렬하는 TreeSet을 생성한다.                                                                            |
+| TreeSet(SortedSet s)                                                                           | 주어진 SortedSet을 구현한 컬렉션을 저장하는 TreeSet을 생성한다.                                                             |
+| Object ceiling(Object o)                                                                       | 지정된 객체와 같은 객체를 반환한다. 없으면 큰 값을 가진 객체 중 가장 가까운 값의 객체를 반환하고, 없으면 null을 반환한다.   |
+| Comparator comparator()                                                                        | TreeSet의 정렬기준(Comparator)를 반환한다.                                                                                  |
+| NavigableSet descendingSet()                                                                   | TreeSet에 저장된 요소들을 역순으로 정렬해서 반환한다.                                                                       |
+| Object first()                                                                                 | 정렬된 순서에서 첫 번째 객체를 반환한다.                                                                                    |
+| Object last()                                                                                  | 정렬된 순서에서 마지막 객체를 반환한다.                                                                                     |
+| Object lower(Object o)                                                                         | 지정된 객체보다 작은 값을 가진 객체 중 가장 가까운 값의 객체를 반환하고, 없으면 null을 반환한다.                            |
+| Object higher(Object o)                                                                        | 지정된 객체보다 큰 값을 가진 객체 중 가장 가까운 값의 객체를 반환하고, 없으면 null을 반환한다.                              |
+| Object floor(Object o)                                                                         | 지정된 객체와 같은 객체를 반환한다. 없으면 작은 값을 가진 객체 중 가장 가까운 값의 객체를 반환하고, 없으면 null을 반환한다. |
+| SortedSet headSet(Object toElement)                                                            | 지정된 객체보다 작은 값의 객체들을 반환한다.                                                                                |
+| NavigableSet headSet(Object toElement, boolean inclusive)                                      | 지정된 객체보다 작은 값의 객체들을 반환한다. inclusive가 true이면 같은 값의 객체도 포함한다.                                |
+| Iterator iterator()                                                                            | TreeSet의 Iterator를 반환한다.                                                                                              |
+| boolean retainAll(Collection c)                                                                | 주어진 컬렉션과 공통된 요소만을 남기고 삭제한다.(교집합)                                                                    |
+| Spliterator spliterator()                                                                      | TreeSet의 spliterator를 반환한다.                                                                                           |
+| SortedSet subSet(Object fromElement, Object toElement)                                         | 범위 검색(fromElement와 toElement 사이)의 결과를 반환한다. (끝 범위인 toElement는 범위에 포함되지 않음)                     |
+| NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement, boolean toInclusive) | 범위 검색의 결과를 반환한다. (fromInclusive가 true면 시작값이 포함되고, toInclusive가 true면 끝값이 포함된다.)              |
+| SortedSet tailSet(Object fromElement)                                                          | 지정된 객체보다 큰 값의 객체들을 반환한다.                                                                                  |
