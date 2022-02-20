@@ -370,3 +370,23 @@ int hashCode2 = p2.hashCode();
 | SortedSet subSet(Object fromElement, Object toElement)                                         | 범위 검색(fromElement와 toElement 사이)의 결과를 반환한다. (끝 범위인 toElement는 범위에 포함되지 않음)                     |
 | NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement, boolean toInclusive) | 범위 검색의 결과를 반환한다. (fromInclusive가 true면 시작값이 포함되고, toInclusive가 true면 끝값이 포함된다.)              |
 | SortedSet tailSet(Object fromElement)                                                          | 지정된 객체보다 큰 값의 객체들을 반환한다.                                                                                  |
+
+## HashMap, Hashtable
+
+### HashMap의 생성자와 메서드
+
+| 생성자 또는 메서드                                            | 설명                                                                         |
+| ------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| HashMap()                                                     | 기본 생성자                                                                  |
+| HashMap(int initialCapacity)                                  | 지정된 값을 초기용량으로 하는 HashMap 객체를 생성한다.                       |
+| HashMap(int initialCapacity, float loadFactor)                | 지정된 초기용량과 load factor의 HashMap 객체를 생성한다.                     |
+| HashMap(Map m)                                                | 지정된 Map의 모든 요소를 포함하는 HashMap을 생성한다.                        |
+| boolean containsKey(Object key)                               | HashMap에 지정된 키가 포함되어 있는지 알려준다.                              |
+| boolean containsValue(Object value)                           | HashMap에 지정된 값이 포함되어 있는지 알려준다.                              |
+| Set entrySet()                                                | HashMap에 저장된 키와 값을 엔트리의 형태로 Set에 저장해서 반환한다.          |
+| Object getOrDefault(Object key, Object defaultValue)          | 짖어된 키의 값을 반환한다. 키를 못찾으면, 기본값으로 지정된 객체를 반환한다. |
+| Set keySet()                                                  | HashMap에 저장된 모든 키가 저장된 Set을 반환한다.                            |
+| void putAll(Map m)                                            | Map에 저장된 모든 요소를 HashMap에 저장한다.                                 |
+| Object replace(Object key, Object value)                      | 지정된 키와 값을 지정된 객체로 대체한다.                                     |
+| boolean replace(Object key, Object oldValue, Object newValue) | 지정된 키와 값이 모두 일치하는 경우에만 새로운 값으로 대체한다.              |
+| Collection values()                                           | HashMap에 저장된 모든 값을 컬렉션의 형태로 반환한다.                         |
