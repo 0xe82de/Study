@@ -330,7 +330,7 @@ int hashCode2 = p2.hashCode();
 
 3. `equals()` 메서드를 호출했을 때 `false`를 반환하는 두 객체는 `hashCode` 호출에 대해 같은 `int` 값을 반환해도 괜찮지만, `해싱(hashing)`을 사용하는 컬렉션의 성능을 향상시키기 위해 다른 `int` 값을 반환하는 것이 좋다.
 
-서로 다른 객체에 대해서 해시 값이 중복된느 경우가 많아지면 해싱을 사용하는 `Hashtable`, `HashMap`과 같은 컬렉션의 검색속도가 떨어진다.
+서로 다른 객체에 대해서 해시 값이 중복된느 경우가 많아지면 해싱을 사용하는 `Hashtable`, `HashMap`과 같은 컬렉션의 검색 속도가 떨어진다.
 
 ## TreeSet
 
@@ -390,3 +390,9 @@ int hashCode2 = p2.hashCode();
 | Object replace(Object key, Object value)                      | 지정된 키와 값을 지정된 객체로 대체한다.                                     |
 | boolean replace(Object key, Object oldValue, Object newValue) | 지정된 키와 값이 모두 일치하는 경우에만 새로운 값으로 대체한다.              |
 | Collection values()                                           | HashMap에 저장된 모든 값을 컬렉션의 형태로 반환한다.                         |
+
+## TreeMap
+
+`TreeMap`은 이진검색트리의 형태로 키와 값의 쌍으로 이루어진 데이터를 저장한다. 검색과 정렬에 적합한 컬렉션이다.
+
+대부분의 경우 검색 속도는 `HashMap`이 `TreeMap`보다 빠르다. 다만 범위검색이나 정렬이 필요한 경우 `TreeMap`을 사용하자.
