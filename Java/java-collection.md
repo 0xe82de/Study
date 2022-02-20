@@ -1,3 +1,7 @@
+# 참고
+
+- 자바의 정석
+
 # 자바 컬렉션
 
 컬렉션 프레임워크는 '`데이터 군`을 저장하는 클래스들을 표준화한 설계'를 의미한다.
@@ -410,4 +414,62 @@ Properties sysProp = System.getProperties();
 System.out.println("java.version :" + sysProp.getProperty("java.version"));
 System.out.println("user.languag :" + sysProp.getProperty("user.language"));
 sysProp.list(System.out);
+```
+
+## Collections
+
+### 컬렉션의 동기화
+
+`Collections` 클래스에는 다음과 같은 동기화 메서드를 제공한다.
+
+```java
+static Collection synchronizedCollection(Collection collection)
+static List synchronizedList(List list)
+static Set synchronizedSet(Set set)
+static Map synchronizedMap(Map map)
+static SortedSet synchronizedSortedSet(SortedSet sortedSet)
+static SortedMap synchronizedSortedMap(SortedMap sortedMap)
+```
+
+### 변경불가 컬렉션 만들기
+
+멀티쓰레드 프로그래밍에서 여러 쓰레드가 하나의 컬렉션을 공유하다보면 데이터가 손상될 수 있는데, 이를 방지하기 위해 다음과 같은 메서드를 사용할 수 있다.
+
+```java
+static Collection unmodifiableCollection(Collection collection)
+static List unmodifiableList(List list);
+static Set unmodifiableSet(Set set)
+static Map unmodifiableMap(Map map)
+static NavigableSet unmodifiableNavigableSet(NavigableSet navigableSet)
+static SortedSet unmodifiableSortedSet(SortedSet sortedSet)
+static NavigableMap unmodifiableNavigableMap(NavigableMap navigableMap)
+static SortedMap unmodifiableSortedMap(SortedMap sortedMap)
+```
+
+### 싱글톤 컬렉션 만들기
+
+싱글톤 컬렉션은 다음의 메서드로 만들 수 있다.
+
+```java
+static List singletonList(Object o)
+static Set singleton(Object o)
+static Map singletonMap(Object key, Object value)
+```
+
+### 한 종류의 객체만 저장하는 컬렉션 만들기
+
+컬렉션의 모든 종류의 객체를 저장할 수 있다는 것은 장점이기도 하고 단점이기도 하다. 대부분의 경우 한 종류의 객체를 저장하며, 컬렉션에 지정된 종류의 객체만 저장할 수 있도록 제한하고 싶을 때 다음의 메서드를 사용할 수 있다.
+
+지네릭스로 처리할 수 있지만 이런 메서드를 제공하는 이유는 호환성 때문이다.
+
+```java
+static Collection checkedCollection(Collection collection, Class type)
+static List checkedList(List list, Class type)
+static Set checkSet(Set set, Class type)
+static Map checkMap(Map map, Class keyType, Class valueType)
+static Queue checkQueue(Queue queue, Class type)
+static NavigableSet checkNavigableSet(NavigableSet navigableSet, Class type)
+static SortedSet checkSortedSet(SortedSet sortedSet, Class type)
+static NavigableMap checkNavigableMap(NavigableMap navigableMap, Class keyType, Class valueType)
+static SortedMap checkSortedMap(SortedMap sortedMap, Class keyType, Class valueType)
 ```
