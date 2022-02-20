@@ -236,3 +236,98 @@ public interface Comparable {
 static void sort(Object[] a); // 객체 배열에 저장된 객체가 구현한 Comparable에 의한 정렬
 static void sort(Object[] a, Comparator c); // 지정한 Comparator에 의한 정렬
 ```
+
+## HashSet
+
+`ArrayList`와 같이 `List` 인터페이스를 구현한 컬렉션과 달리 `HashSet`은 저장순서를 유지하지 않는다. 저장순서를 유지하고 싶다면 `LinkedHashSet`을 사용해야 한다.
+
+> 참고 : HashSet은 내부적으로 HashMap을 이용해서 만들어졌다. HashSet이란 이름은 해싱(hashing)을 이용해서 구현했기 때문에 붙여진 것이다.
+
+### HashSet의 메서드
+
+| 생성자 또는 메서드                             | 설명                                                                            |
+| ---------------------------------------------- | ------------------------------------------------------------------------------- |
+| HashSet()                                      | HashSet 객체를 생성한다.                                                        |
+| HashSet(Collection c)                          | 주어진 컬렉션을 포함하는 HashSet 객체를 생성한다.                               |
+| HashSet(int initialCapacity)                   | 주어진 값을 초기용량으로 하는 HashSet 객체를 생성한다.                          |
+| HashSet(int initialCapacity, float loadFactor) | 초기용량과 load factor를 지정하는 생성자                                        |
+| Iterator iterator()                            | Iterator를 반환한다.                                                            |
+| boolean remove(Object o)                       | 지정된 객체를 HashSet에서 삭제한다. 성공하면 true를, 실패하면 false를 반환한다. |
+| boolean removeAll(Collection c)                | 주어진 컬렉션에 저장된 모든 객체와 동일한 객체를 HashSet에서 삭제한다.          |
+| boolean retainAll(Collection c)                | 주어진 컬렉션에 저장된 객체와 동일한 객체만 남기고 나머지는 삭제한다.           |
+
+> 참고 : load factor는 컬렉션 클래스에 저장공간이 가득 차기 전에 미리 용량을 확보하기 위한 것으로 이 값을 0.8로 지정하면, 저장공간의 80%가 채워졌을 때 용량이 두 배로 늘어난다. 기본값은 0.75, 즉 75%이다.
+
+`HashSet`에 객체를 저장할 경우 `equals()`와 `hashCode()`를 재정의해야 한다. `add()` 메서드는 새로운 요소를 추가하기 전에 기전에 저장된 요소와 같은 것인지 판별하기 위해 추가하려는 요소의 `equals()`와 `hasCode()`를 호출하기 때문이다.
+
+```java
+public class HashSetEx4 {
+    public static void main(String[] args) {
+        HashSet set = new HashSet();
+
+        set.add(new String("abc"));
+        set.add(new String("abc"));
+        set.add(new Person2("David",10));
+        set.add(new Person2("David",10));
+
+        System.out.println(set); // [abc, David:10]
+    }
+}
+
+class Person2 {
+    String name;
+    int age;
+
+    Person2(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public boolean equals(Object obj) {
+        if(obj instanceof Person2) {
+            Person2 tmp = (Person2)obj;
+            return name.equals(tmp.name) && age==tmp.age;
+        }
+
+        return false;
+    }
+
+    public int hashCode() {
+        return (name+age).hashCode();
+    }
+
+    public String toString() {
+        return name +":"+ age;
+    }
+}
+```
+
+`hashCode()` 메서드를 오버라이딩할 때 세 가지 규칙을 지켜야 한다.
+
+1. 실행 중인 애플리케이션 내의 동일한 객체에 대해서 여러 번 `hashCode()`를 호출해도 동일한 `int` 값을 반환해야 한다. 하지만 실행시마다 동일한 `int`값을 반환할 필요는 없다.
+
+```java
+Person2 p = new Person2("David", 10);
+int hashCode1 = p.hashCode();
+int hashCode2 = p.hashCode();
+// hashCode1, hashCode2는 같아야 한다. 매번 실행할 때마다 같은 값일 필요는 없다.
+
+p.age = 20;
+int hashCode3 = p.hashCode();
+// age가 변경되었으므로 hasCode3는 달라도 된다.
+```
+
+2. `equals()` 메서드를 이용한 비교에 의해서 `true`를 얻은 두 객체에 대해 각각 `hashCode()` 메서드를 호출해서 얻은 결과는 같아야 한다.
+
+```java
+Person2 p1 = new Person2("David", 10);
+Person2 p2 = new Person2("David", 10);
+boolean b = p1.equals(p2);
+int hashCode1 = p1.hashCode();
+int hashCode2 = p2.hashCode();
+// b가 true일 때 hashCode1, hashCode2는 같아야 한다.
+```
+
+3. `equals()` 메서드를 호출했을 때 `false`를 반환하는 두 객체는 `hashCode` 호출에 대해 같은 `int` 값을 반환해도 괜찮지만, `해싱(hashing)`을 사용하는 컬렉션의 성능을 향상시키기 위해 다른 `int` 값을 반환하는 것이 좋다.
+
+서로 다른 객체에 대해서 해시 값이 중복된느 경우가 많아지면 해싱을 사용하는 `Hashtable`, `HashMap`과 같은 컬렉션의 검색속도가 떨어진다.
