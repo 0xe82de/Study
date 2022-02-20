@@ -216,3 +216,23 @@ List list = new ArrayList(Arrays.asList(1, 2, 3, 4, 5));
 ### parallelXXX(), spliterator(), stream()
 
 이 외에도 `parallel`로 시작하는 이름의 메서드가 있는데, 이 메서드들은 빠른 결과를 얻기 위해 여러 쓰레드가 작업을 나누어 처리한다. `spliterator()`는 여러 쓰레드가 처리할 수 있게 하나의 작업을 여러 작업으로 나누는 `Spliterator`를 반환하며 `stream()`은 컬렉션을 스트림으로 변환한다.
+
+## Comparator, Comparable
+
+```java
+public interface Comparator {
+    int compare(Object o1, Object o2);
+    boolean equals(Object obj);
+}
+
+public interface Comparable {
+    public int compareTo(Object o);
+}
+```
+
+`compare()`와 `compareTo()`는 두 객체를 비교한다는 같은 기능을 목적으로 고안된 것이다. `compareTo()`의 반환값은 `int`이지만 실제로는 비교하는 두 객체가 같으면 `0`, 비교하는 값보다 작으면 음수, 크면 양수를 반환하도록 구현해야 한다. `compare()`도 마찬가지이다.
+
+```java
+static void sort(Object[] a); // 객체 배열에 저장된 객체가 구현한 Comparable에 의한 정렬
+static void sort(Object[] a, Comparator c); // 지정한 Comparator에 의한 정렬
+```
