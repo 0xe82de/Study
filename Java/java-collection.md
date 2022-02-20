@@ -396,3 +396,18 @@ int hashCode2 = p2.hashCode();
 `TreeMap`은 이진검색트리의 형태로 키와 값의 쌍으로 이루어진 데이터를 저장한다. 검색과 정렬에 적합한 컬렉션이다.
 
 대부분의 경우 검색 속도는 `HashMap`이 `TreeMap`보다 빠르다. 다만 범위검색이나 정렬이 필요한 경우 `TreeMap`을 사용하자.
+
+## Properties
+
+`Properties`는 `HashMap`의 구버전인 `Hashtable`을 상속받아 구현한 것으로, `Hashtable`은 키와 값을 `(Object, Object)`의 형태로 저장하는데 비해 `Properties`는 `(String, String)`의 형태로 저장한다.
+
+주로 애플리케이션의 환경설정과 관련된 속성을 저장하는데 사용되며 데이터를 파일로부터 읽고 쓰는 편리한 기능을 제공한다.
+
+아래와 같이 시스템의 설정 정보를 읽어올 수 있다.
+
+```java
+Properties sysProp = System.getProperties();
+System.out.println("java.version :" + sysProp.getProperty("java.version"));
+System.out.println("user.languag :" + sysProp.getProperty("user.language"));
+sysProp.list(System.out);
+```
