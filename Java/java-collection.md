@@ -139,3 +139,80 @@ public void remove() {
 ```
 
 단순히 `public void remove() {};`와 같이 구현하는 것보다 이처럼 예외를 던져서 구현되지 않은 기능이라는 것을 메서드를 호출하는 쪽에 알리는 것이 좋다. 그렇지 않으면 호출하는 쪽에서 소스를 구해보기 전까지는 이 기능이 바르게 동작하지 않는 이유를 알 방법이 없다.
+
+## Arrays
+
+### 배열의 복사 - copyOf(), copyOfRange()
+
+```java
+int[] arr = {0, 1, 2, 3, 4};
+int[] arr2 = Arrays.copyOf(arr, arr.length); // arr2 = {0, 1, 2, 3, 4};
+int[] arr3 = Arrays.copyOf(arr, 3); // arr3 = {0, 1, 2};
+int[] arr4 = Arrays.copyOf(arr, 7); // arr4 = {0, 1, 2, 3, 4, 0, 0};
+int[] arr5 = Arrays.copyOfRange(arr, 2, 4); // arr5 = {2, 3};
+int[] arr6 = Arrays.copyOfRange(arr, 0, 7); // arr6 = {0, 1, 2, 3, 4, 0, 0};
+```
+
+### 배열 채우기 - fill(), setAll()
+
+```java
+int[] arr = new int[5];
+Arrays.fill(arr, 9); // arr = {9, 9, 9, 9, 9};
+Arrays.setAll(arr, () -> (int) (Math.random() * 5) + 1); // arr = {1, 2, 1, 5, 1}; 랜덤
+```
+
+### 배열의 정렬과 검색 - sort(), binarySearch()
+
+```java
+int[] arr = {3, 2, 0, 1, 4};
+int idx = Arrays.binarySearch(arr, 2); // idx = -5 -> 잘못된 결과
+
+Arrays.sort(arr); // 정렬, {0, 1, 2, 3, 4};
+int idx = Arrays.binarySearch(arr, 2); // idx = 2 -> 올바른 결과
+```
+
+배열의 첫 번째 요소부터 순서대로 하나씩 검색하는 것을 `순차 검색(linear search)`라고 하는데, 이 방법은 배열이 정렬되어 있을 필요는 없지만 배열의 요소를 하나씩 비교하므로 시간이 많이 소요된다.
+
+반면에 `이진 검색(binary search)`는 배열의 검색할 범위를 반복적으로 절반으로 줄여가면서 검색하므로 검색 속도가 빠르다. 단, 배열이 정렬되어 있어야 한다.
+
+### 배열의 비교와 출력 - equals(), toString()
+
+`toString()` 배열의 모든 요소를 문자열로 출력할 수 있다. 다차원 배열에는 `deepToString()` 메서드를 사용해야 한다. `deepToString()`은 배열의 모든 요소를 재귀적으로 접근해서 문자열을 구성하므로 2차원 뿐만 아니라 3차원 이상의 배열에도 동작한다.
+
+```java
+int[] arr = {0, 1, 2, 3, 4};
+int[][] arr2D = {{11, 12,}, {21, 22}};
+
+Arrays.toString(arr); // [0, 1, 2, 3, 4];
+Arrays.deepToString(arr2D); // [[11, 12], [21, 22]]
+```
+
+`equals()`는 두 배열에 저장된 모든 요소를 비교해서 같으면 true를, 다르면 false를 반환한다. 2차원 이상의 배열에는 `deepEquals()`를 사용해야 한다.
+
+```java
+String[][] str2D = new String[][] {{"aaa", "bbb"}, {"AAA", "BBB"}};
+String[][] str2D2 = new String[][] {{"aaa", "bbb"}, {"AAA", "BBB"}};
+
+Arrays.equals(str2D, str2D2); // false
+Arrays.deepEquals(str2D, str2D2); // true
+```
+
+### 배열을 List로 변환 - asList(Object.. a)
+
+`asList()`는 배열을 List에 담아서 반환한다. 매개변수의 타입이 가변인수이므로 배열 생성 없이 저장할 요소들만 나열하는 것도 가능하다.
+
+```java
+List list = Arrays.asList(new Integer[] {1, 2, 3, 4, 5}); // list = [1, 2, 3, 4, 5];
+List list = Arrays.asList(1, 2, 3, 4, 5); // list = [1, 2, 3, 4, 5];
+list.add(6); // UnsupportedOperationException 예외 발생
+```
+
+한 가지 주의할 점은 `asList()`가 반환한 List의 크기를 변경할 수 없다는 것이다. 추가 또는 삭제가 불가능하며 저장된 내용은 변경할 수 있다. 만약 크기를 변경할 수 있는 List가 필요하다면 다음과 같이 하면 된다.
+
+```java
+List list = new ArrayList(Arrays.asList(1, 2, 3, 4, 5));
+```
+
+### parallelXXX(), spliterator(), stream()
+
+이 외에도 `parallel`로 시작하는 이름의 메서드가 있는데, 이 메서드들은 빠른 결과를 얻기 위해 여러 쓰레드가 작업을 나누어 처리한다. `spliterator()`는 여러 쓰레드가 처리할 수 있게 하나의 작업을 여러 작업으로 나누는 `Spliterator`를 반환하며 `stream()`은 컬렉션을 스트림으로 변환한다.
