@@ -86,3 +86,56 @@
 | 메서드           | 설명                                                                                            |
 | ---------------- | ----------------------------------------------------------------------------------------------- |
 | Object element() | 삭제없이 요소를 읽어온다. peek와 달리 Queue가 비었을 때 NoSuchElementException 예외가 발생한다. |
+
+## Iterator, ListIterator, Enumeration
+
+Iterator, ListIterator, Enumeration은 모두 컬렉션에 저장된 요소에 접근하는데 사용되는 인터페이스다. Enumeration은 Iterator의 구버전이며, ListIterator는 Iterator의 기능을 향상시킨 것이다.
+
+### Iterator 인터페이스의 메서드
+
+| 메서드            | 설명                                                                               |
+| ----------------- | ---------------------------------------------------------------------------------- |
+| boolean hasNext() | 읽어 올 요소가 남아있는지 확인한다. 있으면 true를, 없으면 false를 반환한다.        |
+| Object next()     | 다음 요소를 읽어 온다.                                                             |
+| void remove()     | next()로 읽어 온 요소를 삭제한다. next()를 호출한 다음에 remove()를 호출해야 한다. |
+
+> 컬렉션 Iterator 예제
+
+```java
+Collection c = new ArrayList(); // 다른 컬렉션으로 변경 시 이 부분만 고치면 된다.
+Iterator it = c.iterator();
+
+while (it.hasNext()) {
+    System.out.println(it.next());
+}
+```
+
+> 맵 Iterator 예제
+
+```java
+Map map = new HashMap();
+Iterator it = map.entrySet().iterator();
+```
+
+### ListIterator, Enumeration
+
+ListIterator는 Iterator를 상속받아서 기능을 추가한 것으로, 양방향으로의 이동이 가능하다. 다만, ArrayList나 LinkedList와 같이 List 인터페이스를 구현한 컬렉션에서만 사용할 수 있다.
+
+### ListIterator의 메서드
+
+| 메서드                | 설명                                                                                                                                                     |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| boolean hasPrevious() | 읽어 올 이전 요소가 남아있는지 확인한다. 있으면 true를, 없으면 false를 반환한다.                                                                         |
+| Object previous()     | 이전 요소를 읽어 온다.                                                                                                                                   |
+| void remove()         | next() 또는 previous()로 읽어 온 요소를 삭제한다. 반드시 next()나 previous()를 먼저 호출한 다음에 이 메서드를 호출해야 한다. (선택적 기능)               |
+| void set(Object o)    | next() 또는 previous()로 읽어 온 요소를 지정된 객체로 변경한다. 반드시 next()나 previous()를 먼저 호출한 다음에 이 메서드를 호출해야 한다. (선택적 기능) |
+
+위 표에서 `선택적 기능`이라고 표시된 것들은 반드시 구현하지 않아도 된다. 하지만 인터페이스로부터 상속받은 메서드는 추상메서드라 메서드의 몸통(body)를 반드시 만들어 주어야 하므로 다음과 같이 처리한다.
+
+```java
+public void remove() {
+    throw new UnsupportedOperationException();
+}
+```
+
+단순히 `public void remove() {};`와 같이 구현하는 것보다 이처럼 예외를 던져서 구현되지 않은 기능이라는 것을 메서드를 호출하는 쪽에 알리는 것이 좋다. 그렇지 않으면 호출하는 쪽에서 소스를 구해보기 전까지는 이 기능이 바르게 동작하지 않는 이유를 알 방법이 없다.
