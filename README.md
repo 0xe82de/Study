@@ -4,6 +4,7 @@
 
 - [Java](https://github.com/0xe82de/Study/tree/main/Java/Common)
 - [Java Collection](https://github.com/0xe82de/Study/blob/main/Java/java-collection.md)
+- [Generics](https://github.com/0xe82de/Study/blob/main/Java/generics.md)
 - [백기선님 Java-Study](https://github.com/0xe82de/Study/tree/main/Java/Java-Study)
 - [자바의 정석](https://github.com/0xe82de/Study/tree/main/Java/%EC%9E%90%EB%B0%94%EC%9D%98%20%EC%A0%95%EC%84%9D)
 
