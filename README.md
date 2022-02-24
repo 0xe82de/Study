@@ -3,6 +3,7 @@
 ## Java
 
 - [Java](https://github.com/0xe82de/Study/tree/main/Java/Common)
+- [annotation](https://github.com/0xe82de/Study/blob/main/Java/annotation.md)
 - [enums](https://github.com/0xe82de/Study/blob/main/Java/enums.md)
 - [Generics](https://github.com/0xe82de/Study/blob/main/Java/generics.md)
 - [Java Collection](https://github.com/0xe82de/Study/blob/main/Java/java-collection.md)
