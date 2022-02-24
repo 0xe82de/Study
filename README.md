@@ -31,5 +31,6 @@
 ## SQL
 
 - [calculate(연산)](https://github.com/0xe82de/Study/blob/main/SQL/calculate.md)
+- [CASE](https://github.com/0xe82de/Study/blob/main/SQL/CASE.md)
 - [LIMIT](https://github.com/0xe82de/Study/blob/main/SQL/LIMIT.md)
 - [ORDER BY](https://github.com/0xe82de/Study/blob/main/SQL/ORDER-BY.md)
