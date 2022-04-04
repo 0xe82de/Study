@@ -9,6 +9,12 @@ public class MySort {
         System.out.println("[선택 정렬] 정렬 전 => " + Arrays.toString(arr));
         selectionSort(arr);
         System.out.println("[선택 정렬] 정렬 후 => " + Arrays.toString(arr));
+        System.out.println();
+
+        arr = createArr();
+        System.out.println("[삽입 정렬] 정렬 전 => " + Arrays.toString(arr));
+        insertionSort(arr);
+        System.out.println("[삽입 정렬] 정렬 후 => " + Arrays.toString(arr));
     }
 
     static int[] createArr() {
@@ -29,6 +35,22 @@ public class MySort {
             int temp = arr[minIndex];
             arr[minIndex] = arr[i];
             arr[i] = temp;
+        }
+    }
+
+    static void insertionSort(int[] arr) {
+        final int SIZE = arr.length;
+
+        for (int i = 1; i < SIZE; i++) {
+            for (int j = i; j > 0; j--) {
+                if (arr[j - 1] > arr[j]) {
+                    int temp = arr[j - 1];
+                    arr[j - 1] = arr[j];
+                    arr[j] = temp;
+                } else {
+                    break;
+                }
+            }
         }
     }
 }
