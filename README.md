@@ -4,7 +4,7 @@
 
 - [재귀](https://github.com/0xe82de/Study/tree/main/Algorithm/Recursive)
 - [탐색](https://github.com/0xe82de/Study/tree/main/Algorithm/Search)
-- [정렬](https://github.com/0xe82de/Study/tree/main/Algorithm/Sort)
+- [정렬](https://github.com/0xe82de/Study/blob/main/Algorithm/Sort/MySort.java)
 
 ## Data Structure
 
