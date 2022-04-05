@@ -21,6 +21,13 @@ public class MySort {
         System.out.println("[퀵 정렬] 정렬 전 => " + Arrays.toString(arr));
         quickSort(arr, 0, arr.length - 1);
         System.out.println("[퀵 정렬] 정렬 후 => " + Arrays.toString(arr));
+        System.out.println();
+
+        arr = createArr();
+        System.out.println("[계수 정렬] 정렬 전 => " + Arrays.toString(arr));
+        arr = countingSort(arr);
+        System.out.println("[계수 정렬] 정렬 후 => " + Arrays.toString(arr));
+        System.out.println();
     }
 
     static int[] createArr() {
@@ -104,5 +111,24 @@ public class MySort {
 
         quickSort(arr, src, right - 1);
         quickSort(arr, right + 1, dst);
+    }
+
+    static int[] countingSort(int[] arr) {
+        final int MAX = Arrays.stream(arr).max()
+                .orElseThrow(IllegalStateException::new);
+
+        int[] counts = new int[MAX + 1];
+        for (int number : arr) {
+            ++counts[number];
+        }
+
+        List<Integer> list = new ArrayList<>(arr.length);
+        for (int i = 0; i < MAX + 1; i++) {
+            for (int j = 0; j < counts[i]; j++) {
+                list.add(i);
+            }
+        }
+
+        return list.stream().mapToInt(i -> i).toArray();
     }
 }
