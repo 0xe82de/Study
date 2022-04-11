@@ -3,7 +3,7 @@
 ## Algorithm
 
 - [재귀](https://github.com/0xe82de/Study/tree/main/Algorithm/Recursive)
-- [탐색](https://github.com/0xe82de/Study/tree/main/Algorithm/Search)
+- [탐색](https://github.com/0xe82de/Study/tree/main/Algorithm/MySearch.java)
 - [정렬](https://github.com/0xe82de/Study/blob/main/Algorithm/MySort.java)
 
 ## Data Structure
