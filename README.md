@@ -6,10 +6,6 @@
 - [탐색](https://github.com/0xe82de/Study/tree/main/Algorithm/MySearch.java)
 - [정렬](https://github.com/0xe82de/Study/blob/main/Algorithm/MySort.java)
 
-## Data Structure
-
-- [자료 구조](https://github.com/0xe82de/Study/tree/main/Data-Structure/Impl)
-
 ## Java
 
 - [Java](https://github.com/0xe82de/Study/tree/main/Java/Common)
