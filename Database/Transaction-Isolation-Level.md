@@ -1,4 +1,4 @@
-# Content
+## Content
 
 - [트랜잭션 격리 수준](#트랜잭션-격리-수준)
 - [Read Uncommitted](#read-uncommitted)
@@ -6,7 +6,7 @@
 - [Repeatable Read](#repeatable-read)
 - [Serializable](#serializable)
 
-## 트랜잭션 격리 수준
+# 트랜잭션 격리 수준
 
 > **트랜잭션 격리 수준은 여러 트랜잭션이 동시에 수행될 때 한 트랜잭션에서 갱신된 데이터를 다른 트랜잭션에서 조회 시 어떻게 보일지를 결정하는 기준입니다.**
 
