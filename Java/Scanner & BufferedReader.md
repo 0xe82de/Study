@@ -6,13 +6,7 @@
 - 사용하기 간편하다.
 - 대량의 데이터를 처리할 때 수행시간이 비효율적이다.
 
-## BufferedReader
-
-- 대량의 데이터를 처리할 때 수행시간이 효율적이다.
-- 출력할 데이터의 형변환을 해줘야 한다.
-- Scanner보다 사용하기 불편하다.
-
-## Scanner Example
+### Scanner Example
 
 ```Java
 import java.util.Scanner;
@@ -192,7 +186,13 @@ n o
 */
 ```
 
-## BufferedReader Example
+## BufferedReader
+
+- 대량의 데이터를 처리할 때 수행시간이 효율적이다.
+- 출력할 데이터의 형변환을 해줘야 한다.
+- Scanner보다 사용하기 불편하다.
+
+### BufferedReader Example
 
 ```Java
 private static void bufferedReaderTest() throws IOException {
