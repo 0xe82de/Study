@@ -26,7 +26,7 @@
 
 ## Network
 
-- [IP](https://github.com/0xe82de/Study/tree/main/Network/IP)
+- [IPv4 & IPv6](https://github.com/0xe82de/Study/blob/main/Network/IPv4%20%26%20IPv6.md)
 
 ## OS
 
