@@ -16,7 +16,7 @@ IPv4의 Datagram은 가변 길이의 패킷으로, Header와 Payload(Data)로 �
 
 Header는 20에서 60바이트의 길이이며 라우팅과 같은 전송과 관련한 정보를 가지고 있습니다.
 
-![IPv4 Datagram](./img/IPv4_Datagram.png)
+![IPv4 Datagram](https://user-images.githubusercontent.com/68716284/184327886-94275d9d-c8d7-45d3-968b-47729305c4f5.png)
 
 #### 출처: https://electronicspost.com/ipv4-datagram-format/
 
@@ -81,7 +81,7 @@ IPv6 Datagram은 Header와 Payload로 구성됩니다.
 
 기본 Header는 40바이트를 차지하며, 확장 Header와 상위 계층 Data는 65,535바이트까지의 정보를 가질 수 있습니다.
 
-![IPv6](./img/IPv6_Datagram.png)
+![IPV6](https://user-images.githubusercontent.com/68716284/184328060-61086d63-0a04-42a5-9bcf-6fccda07b098.png)
 
 #### 출처: https://electronicspost.com/ipv6-datagram-format/
 
@@ -103,7 +103,7 @@ IPv4의 각 필드의 역할은 다음과 같습니다.
 
 ### IPv6 Datagram Payload(Data 필드)
 
-![IPv6 Datagram Payload](./img/IPv6_Datagram_Payload.png)
+![IPv6 Datagram Payload](https://user-images.githubusercontent.com/68716284/184328117-54ab142f-ac7a-4b22-8399-166dc528f5da.png)
 
 #### 출처: https://www.cisco.com/en/US/technologies/tk648/tk872/technologies_white_paper0900aecd8054d37d.html
 
