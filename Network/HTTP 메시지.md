@@ -97,7 +97,7 @@ HTTP로 데이터를 전송할 때 인코딩을 적용하면 데이터를 효율
 
 ### 압축, Content-Encoding
 
-대용량 파일과 같이 용량이 큰 데이터를 요청할 경우 데이터를 압축하여 전송할 수 있습니다.
+대용량 파일과 같이 용량이 큰 데이터를 요청할 경우 데이터를 압축하여 받을 수 있습니다.
 
 클라이언트는 `Accept-Encoding` 필드를 요청 헤더에 추가하여 압축 방법을 협상할 수 있습니다.
 
@@ -120,7 +120,7 @@ compressed body
 
 ### 분할, Transfer-Encoding
 
-대용량 이미지와 같이 용량이 큰 데이터를 요청할 경우 데이터를 분할하여 전송할 수 있습니다.
+대용량 파일과 같이 용량이 큰 데이터를 요청하고 화면에 표시할 때 데이터를 분할하여 표시할 수 있습니다.
 
 클라이언트는 `Accept-Encoding` 필드를 요청 헤더에 추가하여 분할 전송을 받을 수 있습니다.
 
@@ -129,7 +129,7 @@ GET /images/2 HTTP/1.1
 Accept-Encoding: chunked
 ```
 
-서버는 `Transfer-Encoding` 필드를 응답 헤더에 추가하고 데이터를 분할하여 전송합니다.
+서버는 `Transfer-Encoding` 필드를 응답 헤더에 추가하고 데이터를 분할하여 전송합니다. 이때 헤더는 `Content-Length` 필드를 가지지 않습니다. 바디의 `chunk`마다 길이가 명시됩니다.
 
 ```
 HTTP/1.1 200 OK
@@ -160,28 +160,30 @@ Network\r\n
 
 ```
 POST / HTTP/1.1
-Content-Type: multipart/form-data; boundary=---------------------------8721656041911415653955004498
+Content-Type: multipart/form-data; boundary=--xyz
 Content-Length: 465
 
------------------------------8721656041911415653955004498
-Content-Disposition: form-data; name="myTextField"
-
-Test
------------------------------8721656041911415653955004498
-Content-Disposition: form-data; name="myCheckBox"
-
-on
------------------------------8721656041911415653955004498
-Content-Disposition: form-data; name="myFile"; filename="test.txt"
+--xyz
+Content-Disposition: form-data; name="name"
 Content-Type: text/plain
 
-Simple file.
------------------------------8721656041911415653955004498--
+John
+--xyz
+Content-Disposition: form-data; name="age"
+Content-Type: text/plain
+
+23
+--xyz
+Content-Disposition: form-data; name="photo"; filename="photo.jpeg"
+Content-Type: image/jpeg
+
+[JPEG DATA]
+--xyz--
 ```
 
 ### multipart/byteranges
 
-`multipart/byteranges`는 클라이언트로 부분 데이터를 전송할 때 사용합니다.
+`multipart/byteranges`는 클라이언트에서 복수 범위의 데이터를 요청할 때 사용합니다.
 
 각 데이터는 `boundary`에 의해 구분되어 바디에 포함되며, 각각 `Content-Type`, `Content-Range` 필드를 가집니다.
 
