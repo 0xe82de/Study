@@ -53,7 +53,6 @@ HTTP 메시지는 개행 문자를 기준으로 헤더와 바디로 나뉘는데
 
 ```
 POST /users HTTP/1.1
-──────────────────────────────
 Host: google.com
 Accept-Language: ko
 Cache-Control: no-cache
@@ -81,7 +80,6 @@ username=kim&password=passw0rd
 
 ```
 HTTP/1.1 201 Created
-───────────────────────────────
 Date: Mon, 8 Aug 2022 10:06 GMT
 Server: Apache
 Content-Type: application/json
@@ -105,7 +103,6 @@ HTTP로 데이터를 전송할 때 인코딩을 적용하면 데이터를 효율
 
 ```
 GET /files/1 HTTP/1.1
-──────────────────────────────
 Accept-Encoding: gzip, deflate
 ```
 
@@ -113,7 +110,6 @@ Accept-Encoding: gzip, deflate
 
 ```
 HTTP/1.1 200 OK
-────────────────────────
 Content-Type: text/plain
 Content-Encoding: gzip
 
@@ -130,7 +126,6 @@ compressed body
 
 ```
 GET /images/2 HTTP/1.1
-────────────────────────
 Accept-Encoding: chunked
 ```
 
@@ -138,7 +133,6 @@ Accept-Encoding: chunked
 
 ```
 HTTP/1.1 200 OK
-──────────────────────────
 Content-Type: text/plain
 Transfer-Encoding: chunked
 
@@ -166,7 +160,6 @@ Network\r\n
 
 ```
 POST / HTTP/1.1
-───────────────────────────────────────────────────────────────────────────────────────────────────
 Content-Type: multipart/form-data; boundary=---------------------------8721656041911415653955004498
 Content-Length: 465
 
@@ -194,7 +187,6 @@ Simple file.
 
 ```
 HTTP/1.1 206 Partial Content
-───────────────────────────────────────────────────────────────────
 Accept-Ranges: bytes
 Content-Type: multipart/byteranges; boundary=3d6b6a416f9b5
 Content-Length: 385
@@ -224,7 +216,6 @@ Content-Range: bytes 300-400/1270
 
 ```
 GET /images/3 HTTP/1.1
-──────────────────────
 Host: github.com
 Range: bytes=0-1023
 ```
