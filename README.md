@@ -28,6 +28,7 @@
 
 - [HTTP 메시지](https://github.com/0xe82de/Study/blob/main/Network/HTTP%20%EB%A9%94%EC%8B%9C%EC%A7%80.md)
 - [IPv4 & IPv6](https://github.com/0xe82de/Study/blob/main/Network/IPv4%20%26%20IPv6.md)
+- [Proxy & Gateway](https://github.com/0xe82de/Study/blob/main/Network/Proxy%20%26%20Gateway.md)
 
 ## OS
 
