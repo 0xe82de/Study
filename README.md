@@ -40,6 +40,7 @@
 
 ## Software Engineering
 
+- [IoC, DIP, DI](https://github.com/0xe82de/Study/blob/main/Software%20Engineering/IoC%2C%20DIP%2C%20DI.md)
 - [SOLID 원칙](https://github.com/0xe82de/Study/blob/main/Software%20Engineering/SOLID%20%EC%9B%90%EC%B9%99.md)
 - [UML](https://github.com/0xe82de/Study/blob/main/Software%20Engineering/UML.md)
 
