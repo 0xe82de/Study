@@ -18,7 +18,6 @@
 
 ## Java
 
-- [SOLID 원칙](https://github.com/0xe82de/Study/blob/main/Java/SOLID%20%EC%9B%90%EC%B9%99.md)
 - [Scanner & BufferedReader](https://github.com/0xe82de/Study/blob/main/Java/Scanner%20%26%20BufferedReader.md)
 - [Thread](https://github.com/0xe82de/Study/tree/main/Java)
 - [annotation](https://github.com/0xe82de/Study/blob/main/Java/annotation.md)
@@ -41,6 +40,7 @@
 
 ## Software Engineering
 
+- [SOLID 원칙](https://github.com/0xe82de/Study/blob/main/Software%20Engineering/SOLID%20%EC%9B%90%EC%B9%99.md)
 - [UML](https://github.com/0xe82de/Study/blob/main/Software%20Engineering/UML.md)
 
 ## Spring
