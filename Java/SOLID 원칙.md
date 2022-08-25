@@ -54,7 +54,7 @@ Viewer 클래스는 데이터를 화면에 출력하는 책임만 가져야 하�
 
 SRP 원칙을 지키기 위해 fileDocument 객체가 반환하는 데이터를 추상화할 수 있습니다. String이나 List\<String\>와 같은 저수준의 타입이 아닌 별도의 추상화된 타입을 만들고 해당 타입을 사용하는 것입니다.
 
-### SRC 원칙 반영
+### SRP 원칙 반영
 
 ```java
 public class Data {
