@@ -136,9 +136,7 @@ public class MemberService {
 }
 ```
 
-DIP를 지키고 있는 코드를 다시 보겠습니다. 위 코드에서 MemberService는 MemberRepository에 의존하고 있습니다. MemberService가 MemberRepository 객체를 사용하기 때문입니다.
-
-위의 코드에서는 생성자를 통해서 MemberRepository를 주입받는데, 이러한 방버을 생성자 DI라고 합니다.
+DIP를 지키고 있는 코드를 다시 보겠습니다. 위 코드에서 MemberService는 MemberRepository에 의존하고 있습니다. 그리고 생성자를 통해서 MemberRepository를 주입받는데, 이러한 방법을 생성자 DI라고 합니다.
 
 ### 수정자
 
