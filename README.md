@@ -36,6 +36,7 @@
 
 ## OS
 
+- [프로세스](https://github.com/0xe82de/Study/blob/main/OS/Process.md)
 - [프로세스 vs 스레드](https://github.com/0xe82de/Study/blob/main/OS/Process-vs-Thread.md)
 
 ## Software Engineering
