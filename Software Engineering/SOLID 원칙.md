@@ -180,111 +180,71 @@ LSP 원칙은 `상위 타입의 객체를 하위 타입의 객체로 바꿔도 �
 ### LSP 원칙 위반 예시
 
 ```java
-public class Token {
+public class Food {
 
-    private String value;
-
-    public Token() {
-        this.value = "default";
-    }
-
-    public Token(String value) {
-        this.value = value;
+    public void bad() {
+        System.out.println("음식이 상했습니다.");
     }
 }
 
-public class User {
+public class IceCream extends Food {
 
-    private Token token;
-
-    public Token getToken() {
-        if (token == null) {
-            token = new Token("userToken");
-        }
-
-        return token;
-    }
-
-    public void changeToken(Token token) {
-        this.token = token;
+    public void melt() {
+        System.out.println("아이스크림이 녹았습니다.");
     }
 }
 
-public class Manager extends User {
+public class FoodUtil {
 
-    @Override
-    public Token getToken() {
-        return token;
-    }
-}
-
-public class Encoder {
-
-    public String encode(User user) {
-        if (user instanceof Manager && user.getToken() == null) {
-            user.changeToken(new Token());
+    public void badALl(List<Food> foods) {
+        for (Food food : foods) {
+            if (food instanceof IceCream) {
+                ((IceCream) food).melt();
+            } else {
+                food.bad();
+            }
         }
-
-        String token = user.getToken();
-
-        while (token.length < 8) {
-            token += "!";
-        }
-
-        return token;
-    }
-
-    public static void main() {
-        Encoder encoder = new Encoder();
-
-        User user = new User();
-        String userToken = encoder.encode(user);
-
-        Manager manager = new Manager();
-        // NullPointerException 발생
-        String managerToken = encoder.encode(manager);
     }
 }
 ```
 
-위의 코드에서 User 클래스는 getToken() 메서드로 token 필드를 반환합니다. token이 null이라면 새로운 token을 생성하여 발급합니다. Manager 클래스는 User 클래스를 상속받아 getToken() 메서드를 오버라이딩했는데, token을 그대로 반환합니다. Encoder 클래스에는 User 타입의 객체를 전달받는데, 실제 객체 타입이 Manager이면서 토큰이 null일 때 새로운 token 객체를 생성하여 Manager 타입의 user 객체에 전달합니다. 이후에는 공통 로직을 수행합니다.
+위 코드를 보면 Food 클래스에 `음식이 상하다`의 기능을 가지는 bad() 메서드가 있습니다. IceCream 클래스는 Food 클래스를 상속하는데, `음식이 상하다`의 의미보다 더 직관적인 `아이스크림이 녹다`라는 의미를 가지는 melt() 메서드를 추가했습니다.
 
-객체 타입이 Manager이면 Encoder 클래스의 encode() 메서드 내부 로직이 달라지는데, 이는 OCP 원칙에 위반하는 것입니다. Manager 기능이 확장되었는데, 해당 기능을 사용하는 Encoder 코드가 변경되었기 때문입니다. 그리고 OCP 원칙을 위반하는 이유는 Manager 클래스의 getToken() 메서드가 LSP 원칙을 위반했기 때문입니다.
-
-LSP 원칙을 지키기 위해 Manager 클래스의 getToken() 메서드를 적절하게 오버라이딩할 필요가 있습니다.
+FoodUtil 클래스의 badAll() 메서드는 Food 리스트를 매개변수로 받아서 `음식이 상하는` 처리를 합니다. 하위 타입인 IceCream 객체가 전달될 수 있으므로 타입을 확인하고 IceCream 객체일 경우 형변환을 하여 melt() 메서드를 호출합니다. Food 객체일 경우 bad() 메서드를 호출합니다. 이는 LSP 원칙을 위반하는 것입니다. 상위 타입인 Food 객체가 하위 타입인 IceCream 객체로 바뀌어도 같은 기능을 사용해야 하는데 IceCream 객체일 경우 bad() 메서드가 아닌 melt() 메서드를 사용하기 때문입니다.
 
 ### LSP 원칙 반영
 
 ```java
-public class Manager extends User {
+public class Food {
 
-    @Override
-    public Token getToken() {
-        if (token == null) {
-            token = new Token("managerToken");
-        }
-
-        return token;
+    public void bad() {
+        System.out.println("음식이 상했습니다.");
     }
 }
 
-public class Encoder {
+public class IceCream extends Food {
 
-    public String encode(User user) {
-        String token = user.getToken();
+    @Override
+    public void bad() {
+        melt();
+    }
 
-        while (token.length < 8) {
-            token += "!";
-        }
+    public void melt() {
+        System.out.println("아이스크림이 녹았습니다.");
+    }
+}
 
-        return token;
+public class FoodUtil {
+
+    public void badALl(List<Food> foods) {
+        foods.forEach(Food::bad);
     }
 }
 ```
 
-상위 타입인 User 클래스는 getToken() 메서드의 결과로 null을 반환하지 않습니다. 따라서 하위 타입인 Manager 클래스의 getToken() 메서드를 오버라이딩할 때는 null을 반환해서는 안됩니다. 이에 따라 getToken() 메서드를 오버라이딩해야 한다면 null이 반환되지 않도록 token을 적절하게 생성하여 반환합니다.
+IceCream 클래스에서 melt() 메서드를 호출하도록 오버라이딩했습니다. 이제 FoodUtil 클래스의 badAll 메서드에서는 Food 객체의 실제 타입이 무엇인지 확인하지 않고 bad() 메서드를 호출할 수 있습니다.
 
-이와 같이 LSP 원칙을 지킴으로써 상위 타입을 사용하는 코드에 하위 타입을 전달하더라도 상위 타입의 기능이 정상적으로 동작하는 것을 보장할 수 있습니다. 또한 OCP 원칙을 지킬 수 있도록 합니다.
+이와 같이 LSP 원칙을 지킴으로써 상위 타입을 사용하는 코드에 하위 타입을 전달하더라도 상위 타입의 메서드만을 사용하여 기능이 정상적으로 동작하는 것을 보장할 수 있습니다.
 
 ## ISP, 인터페이스 분리 원칙
 
