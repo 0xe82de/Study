@@ -360,48 +360,73 @@ DIP 원칙은 `고수준 모듈이 저수준 모듈의 구현에 의존해서는
 ### DIP 원칙 위반 예시
 
 ```java
-public class Viewer {
+public class Chicken {
 
-    // ...
+    private int price;
 
-    private FileDocument fileDocument;
+    private boolean fresh;
+}
 
-    private ElectronicDocument electronicDocument;
+public class Pizza {
 
-    public void view(boolean isFile) {
-        Data data = null;
-        if (isFile) {
-            data = fileDocument.getContent();
-        } else {
-            data = electronicDocument.getContent();
-        }
-        data.show();
-    }
+    private int price;
+
+    private boolean fresh;
+}
+
+public class Menu {
+
+    private Chicken chicken;
+
+    private Pizza pizza;
 }
 ```
 
-OCP 원칙에서 사용한 예시 코드를 다시 보겠습니다. 현재 Viewer 클래스는 저수준 모듈인 FileDocument 클래스와 ElectronicDocument 클래스에 의존합니다. 이는 DIP 원칙을 위반하는 것입니다. 기능이 확장될 때마다 Viewer가 변경될 수 밖에 없으며, 결과적으로 OCP 원칙도 위반하게 됩니다.
+현재 Menu 클래스는 Chicken, Pizza 클래스를 의존하고 있습니다. 만약 햄버거, 스테이크 메뉴가 추가된다면 Menu 클래스는 다음과 같이 변경될 것입니다.
 
-DIP 원칙을 지키기 위해 고수준 모듈에 의존하도록 코드를 변경할 필요가 있습니다.
+```java
+public class Menu {
+
+    private Chicken chicken;
+
+    private Pizza pizza;
+
+    private Hamburger hamburger;
+
+    private Steak steak;
+}
+```
+
+위의 코드처럼 새로운 메뉴가 추가될 때마다 Menu 클래스는 수정해야만 합니다.
+
+이는 DIP 원칙을 위반했기 때문에 발생하는 문제입니다. 현재 Menu 클래스는 저수준 모듈인 Chicken, Pizza 클래스를 의존하고 있습니다. DIP 원칙을 반영하여 의존 관계를 역전시켜야 합니다.
 
 ### DIP 원칙 반영
 
 ```java
-public class Viewer {
+public class Food {
 
-    // ...
+    private int price;
 
-    private Document document;
+    private boolean fresh;
+}
 
-    public void view() {
-        Data data = document.getContent();
-        data.show();
-    }
+public class Chicken extends Food {
+
+}
+
+public class Pizza extends Food {
+
+}
+
+public class Menu {
+
+    private List<Food> foods;
 }
 ```
 
-마찬가지로 OCP 원칙을 반영한 코드를 다시 보겠습니다. 현재 Viewer 클래스는 FileDocument 클래스와 ElectronicDocument 클래스를 추상화한 고수준 모듈인 Document 클래스를 의존합니다.
+위와 같이 Chicken, Pizza 타입을 추상화한 Food 클래스를 만들고 Menu 클래스는 고수준 모듈인 Food 클래스만을 의존하도록 했습니다. 이제 새로운 메뉴가 추가되더라도 Food 클래스를 상속한다면 Menu 클래스는 수정할 필요가 없게 되었습니다.
 
-이를 통해 코드의 의존을 역전시키게 되고 저수준 모듈이 변경되더라도 Viewer 클래스는 변경할 필요가 없게 됩니다. 즉, 새로운 기능을 쉽게 확장할 수 있게 되는 것입니다.
+이제 Menu 클래스는 고수준 모듈인 Food 클래스만을 의존하게 되었고, Chicken, Pizza 같은 저수준 모듈도 Food 클래스를 의존하게 되었습니다.
 
-이와 같이 DIP 원칙을 지킴으로써 변경에 유연함을 확보하여 소프트웨어의 유지보수성을 높일 수 있습니다. 또한 OCP 원칙을 지킬 수 있도록 합니다.
+이처럼 코드 상에서 의존을 역전시킴으로써 DIP 원칙을 지킬 수 있습니다.
